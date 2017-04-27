@@ -15,8 +15,8 @@ public class LoginController {
 	 private UserService userService;  
 	      
 	 @RequestMapping("toindex")
-	 public String login(String username,String pwd){  
-		 int count =userService.selectByusernameAndPwd(username, pwd);
+	 public String login(String username,String password){  
+		 int count =userService.selectByusernameAndPwd(username, password);
 		 if(count!=0){
 			 return "index";
 		 }
