@@ -37,27 +37,7 @@
     			$("#alertId").show();
     			$("#alertContent").html("请输入密码");
     		}
-    		else{
-    			$.ajax({
-    		        url: '${appctx}/user/valid',
-    		        async: true,
-    		        contentType:"application/json",
-    		        type: 'POST',
-    		        data: JSON.stringify({name:$("#username").val(),pwd:$("#password").val()}),
-    		        success: function(data , textStatus){
-    		          if(data.result=="success"){
-    		        	  location.href="${appctx}/user/sucess";
-    		          }else if(data.result=="infoError"){
-    		        	  $("#alertId").show();
-    		        	  $("#alertContent").html("用户名或者密码不对！");
-    		          }
-    		        },
-    		        error: function(jqXHR , textStatus , errorThrown){
-    		        	$("#alertId").show();
-    		        	$("#alertContent").html("系统异常，请联系管理员！");
-    		        }
-    		      });
-    		}
+    	
     	}
     </script>
 </head>
@@ -75,7 +55,7 @@
 				<button type="button" class="close" data-dismiss="alert">&times;</button>
 				<strong id="alertContent"></strong>
 			</div>
-            <form class="form-horizontal">
+            <form class="form-horizontal" action="user/sucess.do" method="post">
                 <fieldset>
                     <div class="input-group input-group-lg">
                         <span class="input-group-addon"><i class="glyphicon glyphicon-user red"></i></span>
@@ -96,7 +76,7 @@
                     <div class="clearfix"></div>
 
                     <p class="center col-md-5">
-                    	<button type="button" class="btn btn-primary" id="loginId" onclick="loginFunction()">登录</button>
+                    	<button type="submit" class="btn btn-primary" id="loginId" onclick="loginFunction()">登录</button>
                     </p>
                     
                 </fieldset>

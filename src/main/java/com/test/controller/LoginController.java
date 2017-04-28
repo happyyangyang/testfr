@@ -20,29 +20,21 @@ public class LoginController {
 	 @Resource  
 	 private UserService userService;  
 	 
-	 @RequestMapping("/valid")
-	 public Map<String,String> valid(@RequestBody User user,HttpServletRequest request){
-		 HashMap<String,String> map = new HashMap<String,String>();
-		 int count =userService.selectByusernameAndPwd(user.getUsername(),user.getPwd());
+	 public String sucess(String username,String password,HttpServletRequest request){ 
+		 User user = new User();
+		 user.setUsername(username);
+		 user.setPwd(password);
+		 int count =userService.selectByusernameAndPwd(username,password);
 		 if(count!=0){
-			 map.put("result", "success");
+			 
 			 request.getSession().setAttribute("loginUser",user);
+			 return "index";
 		 }
 		 else{
-			 map.put("result", "infoError"); ;
+			 return "fail";
 		 }
 		 
-		 return map;
-		 
-		 
-	 }
-	 
-	 @RequestMapping("/sucess")
-	 public String sucess(){  
-		 return "index";
 	 }  
-	 public String fail(){  
-		 return "fail";
-	 }  
+	
 
 }
