@@ -39,23 +39,17 @@
     		}
     		else{
     			$.ajax({
-    		        url: '${appctx}/user/toindex.do',
+    		        url: '${appctx}/user/valid',
     		        async: true,
     		        contentType:"application/json",
     		        type: 'POST',
     		        data: JSON.stringify({name:$("#username").val(),pwd:$("#password").val()}),
     		        success: function(data , textStatus){
     		          if(data.result=="success"){
-    		        	  location.href="${appctx}/indexController/loginSuccess";
-    		          }else if(data.result=="userStop"){
-    		        	  $("#alertId").show();
-    		        	  $("#alertContent").html("已停用，请联系系统管理员！");
+    		        	  location.href="${appctx}/user/sucess";
     		          }else if(data.result=="infoError"){
     		        	  $("#alertId").show();
     		        	  $("#alertContent").html("用户名或者密码不对！");
-    		          }else if(data.result=="error"){
-    		        	  $("#alertId").show();
-    		        	  $("#alertContent").html("登录失败，请联系管理员！");
     		          }
     		        },
     		        error: function(jqXHR , textStatus , errorThrown){
