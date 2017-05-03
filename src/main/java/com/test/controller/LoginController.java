@@ -20,6 +20,7 @@ public class LoginController {
 	 @Resource  
 	 private UserService userService;  
 	 
+	 @RequestMapping("/sucess")
 	 public String sucess(String username,String password,HttpServletRequest request){ 
 		 User user = new User();
 		 user.setUsername(username);
@@ -35,6 +36,12 @@ public class LoginController {
 		 }
 		 
 	 }  
+	 
+	 @RequestMapping("/toregistpage")
+	 public String registpage(){
+		 return "registerPage";
+		 
+	 }
 	
 
 }

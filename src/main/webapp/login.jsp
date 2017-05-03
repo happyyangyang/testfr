@@ -59,18 +59,18 @@
                 <fieldset>
                     <div class="input-group input-group-lg">
                         <span class="input-group-addon"><i class="glyphicon glyphicon-user red"></i></span>
-                        <input type="text" class="form-control" id="username" placeholder="Username">
+                        <input type="text" class="form-control" name="username" placeholder="Username">
                     </div>
                     <div class="clearfix"></div><br>
 
                     <div class="input-group input-group-lg">
                         <span class="input-group-addon"><i class="glyphicon glyphicon-lock red"></i></span>
-                        <input type="password" class="form-control" id="password" placeholder="Password">
+                        <input type="password" class="form-control" name="password" placeholder="Password">
                     </div>
                     <div class="clearfix"></div><br>
                     <div class="row">
-	                    <div class="col-md-6" style="text-align: left;padding-left:25px;"><a href="${appctx}/loginController/registerPage">注册</a></div>
-	                    <div class="col-md-6" style="text-align: right;padding-right:25px;"><a href="${appctx}/loginController/getPswPage">找回密码</a></div>
+	                    <div class="col-md-6" style="text-align: left;padding-left:25px;"><a href="${appctx}/jsp/registerPage.jsp">注册</a></div>
+	                    <div class="col-md-6" style="text-align: right;padding-right:25px;"><a href="${appctx}/jsp/getPswPage.jsp">找回密码</a></div>
                     </div>
                     
                     <div class="clearfix"></div>
