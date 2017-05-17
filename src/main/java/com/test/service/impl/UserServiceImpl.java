@@ -2,6 +2,9 @@ package com.test.service.impl;
 
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +26,14 @@ public class UserServiceImpl implements UserService{
 	public int selectByusernameAndPwd(String username, String pwd) {
 		
 		return userDao.selectByusernameAndPwd(username,pwd);
+	}
+
+
+	@Override
+	public List<User> selectByAddress(String address) {
+		List<User> userlist = new ArrayList<User>();
+		return userlist = userDao.selectByAddress(address);
+		
 	}
 
 
