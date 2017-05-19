@@ -55,7 +55,7 @@
 				<button type="button" class="close" data-dismiss="alert">&times;</button>
 				<strong id="alertContent"></strong>
 			</div>
-            <form class="form-horizontal" action="user/returnjson.do" method="post">
+            <form class="form-horizontal" action="user/sucess.do" method="post">
                 <fieldset>
                     <div class="input-group input-group-lg">
                         <span class="input-group-addon"><i class="glyphicon glyphicon-user red"></i></span>

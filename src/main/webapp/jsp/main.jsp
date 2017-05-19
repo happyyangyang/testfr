@@ -148,13 +148,13 @@
 				<button class="btn btn-default dropdown-toggle"
 					data-toggle="dropdown">
 					<i class="glyphicon glyphicon-user"></i><span
-						class="hidden-sm hidden-xs">${loginUser.name}</span> <span
+						class="hidden-sm hidden-xs">${username}</span> <span
 						class="caret"></span>
 				</button>
 				<ul class="dropdown-menu">
-					<li><a target='main_target' href="${appctx}/indexController/homePage">首页</a></li>
+					<li><a target='main_target' href="${appctx}/jsp/homePage.jsp">首页</a></li>
 					<li class="divider"></li>
-					<li><a href="${appctx}/indexController/logout/${loginUser.name}">退出</a></li>
+					<li><a href="${appctx}/indexController/logout/${username}">退出</a></li>
 				</ul>
 			</div>
 		</div>
@@ -219,7 +219,7 @@
 				</div>
 			</div>
 			<div id="content" class="col-lg-10 col-sm-10">
-				<iframe src="${appctx}/indexController/homePage" name='main_target'
+				<iframe src="${appctx}/jsp/homePage.jsp" name='main_target'
 					id="iframepage" frameborder="0" scrolling="no" marginheight="0"
 					marginwidth="0" onLoad="iFrameHeight()"></iframe>
 			</div>
