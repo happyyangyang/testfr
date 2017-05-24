@@ -124,7 +124,7 @@ public interface UserMapper {
     @Results({
         @Result(column="id", property="id", jdbcType=JdbcType.INTEGER, id=true),
         @Result(column="username", property="username", jdbcType=JdbcType.VARCHAR),
-        @Result(column="birthday", property="birthday", jdbcType=JdbcType.DATE),
+        @Result(column="birthday", property="birthday",jdbcType=JdbcType.DATE),
         @Result(column="sex", property="sex", jdbcType=JdbcType.CHAR),
         @Result(column="address", property="address", jdbcType=JdbcType.VARCHAR),
         @Result(column="pwd", property="pwd", jdbcType=JdbcType.VARCHAR),

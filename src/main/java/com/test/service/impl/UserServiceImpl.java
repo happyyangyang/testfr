@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.test.dao.UserMapper;
 import com.test.model.User;
+import com.test.model.UserExample;
 import com.test.service.UserService;
 
 @Service("userService") 
@@ -35,6 +36,19 @@ public class UserServiceImpl implements UserService{
 		return userlist = userDao.selectByAddress(address);
 		
 	}
+
+
+
+
+
+	@Override
+	public List<User> selectByExample(UserExample example) {
+		List<User> list = new ArrayList<User>();
+		list = userDao.selectByExample(example);
+		return list;
+	}
+
+
 
 
 }

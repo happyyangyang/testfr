@@ -55,7 +55,7 @@
 				<button type="button" class="close" data-dismiss="alert">&times;</button>
 				<strong id="alertContent"></strong>
 			</div>
-            <form class="form-horizontal" action="user/sucess.do" method="post">
+            <form class="form-horizontal" action="user/sucesspojo.do" method="post">
                 <fieldset>
                     <div class="input-group input-group-lg">
                         <span class="input-group-addon"><i class="glyphicon glyphicon-user red"></i></span>
@@ -65,7 +65,7 @@
 
                     <div class="input-group input-group-lg">
                         <span class="input-group-addon"><i class="glyphicon glyphicon-lock red"></i></span>
-                        <input type="password" class="form-control" name="password" placeholder="Password">
+                        <input type="password" class="form-control" name="pwd" placeholder="Password">
                     </div>
                     <div class="clearfix"></div><br>
                     <div class="row">
