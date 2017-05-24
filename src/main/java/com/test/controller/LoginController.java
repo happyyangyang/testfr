@@ -21,6 +21,7 @@ import com.test.model.UserDog;
 import com.test.model.UserExample;
 import com.test.model.UserExample.Criteria;
 import com.test.model.UserListForm;
+import com.test.model.UserSetForm;
 import com.test.service.UserService;
 
 @Controller
@@ -108,8 +109,16 @@ public class LoginController {
 		return map;
 		 
 	 }
+	 //Set绑定
 	 
-	 
+	 @RequestMapping("/SetUsers")
+	 @ResponseBody
+	 public Map<String,Object> SetUser(UserSetForm userset){
+		 Map<String,Object> map = new  HashMap<String,Object>();
+		 map.put("参数", userset);
+		return map;
+		 
+	 }
 	//返回json 
 	 @RequestMapping("/returnjson")
 	 @ResponseBody
