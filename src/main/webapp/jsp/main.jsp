@@ -199,6 +199,13 @@
 									<li><a class="ajax-link"  target='main_target' href="${appctx}/bootstrapController/error"><i class="glyphicon glyphicon-ban-circle"></i><span> Error Page</span></a></li>
 									<li><a class="ajax-link"  target='main_target' href="${appctx}/bootstrapController/loginPage"><i class="glyphicon glyphicon-lock"></i><span> Login Page</span></a></li>
 								</ul>
+							</li>--%>
+							<li class="accordion"><a href="#"><i class="glyphicon glyphicon-plus"></i><span>接口管理</span></a>
+								<ul class="nav nav-pills nav-stacked">
+									<li><a class="ajax-link"  target='main_target' href="${appctx}/jsp/newHttp.jsp"><i class="glyphicon glyphicon-align-justify"></i><span>Http接口</span></a></li>
+									<li><a class="ajax-link"  target='main_target' href="${appctx}/jsp/newHttps.jsp"><i class="glyphicon glyphicon-calendar"></i><span>Https接口</span></a></li>
+									<li><a class="ajax-link"  target='main_target' href="${appctx}/jsp/newWebservice.jsp"><i class="glyphicon glyphicon-th"></i><span>Webservice</span></a></li>
+								</ul>
 							</li>
 							<li class="accordion"><a href="#"><i class="glyphicon glyphicon-plus"></i><span>权限管理</span></a>
 								<ul class="nav nav-pills nav-stacked">
@@ -213,7 +220,7 @@
 									<li><a class="ajax-link"  target='main_target' href="${appctx}/visitorController/visitorIndex"><i class="glyphicon glyphicon-calendar"></i><span>访客管理</span></a></li>
 									<li><a class="ajax-link"  target='main_target' href="${appctx}/paramController/paramIndex"><i class="glyphicon glyphicon-th"></i><span>系统参数</span></a></li>
 								</ul>
-							</li> --%>
+							</li> 
 						</ul>
 					</div>
 				</div>
