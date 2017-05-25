@@ -124,7 +124,7 @@ public class LoginController {
 	 //map绑定
 	 @RequestMapping("/MapUsers")
 	 @ResponseBody
-	 public Map<String,Object> MapUser(UserMapForm usermap){
+	 public Map<String,User> MapUser(UserMapForm usermap){
 		// Map<String,Object> map = new  HashMap<String,Object>();
 		// map.put("参数", usermap);
 		return usermap.getUserMap();
