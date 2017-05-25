@@ -214,7 +214,7 @@
 									</a>
 								</div>
 							</div>
-							<a class="btn btn-danger" href="#" onclick="batchDelFun()" data-toggle="modal" data-target="#myModal">
+							<a class="btn btn-danger" href="${appctx}/jsp/new.jsp">
 								<i class="glyphicon glyphicon-plus"></i>新增
 							</a>
 							<a class="btn btn-danger" href="#" onclick="batchDelFun()" data-toggle="modal" data-target="#myModal">
