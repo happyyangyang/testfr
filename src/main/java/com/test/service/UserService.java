@@ -12,4 +12,8 @@ public interface UserService {
 	
 	
 	List<User> selectByExample(UserExample example);
+	
+	int countUser();
+	
+	List<User> AllUser();
 }

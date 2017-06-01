@@ -199,8 +199,7 @@
 				<div class="box-inner">
 					<div class="box-header well" data-original-title="">
 						<h2>
-							<i class="glyphicon glyphicon-user"></i>操作日志
-						</h2>
+							<i class="glyphicon glyphicon-user"></i></h2>
 					</div>
 					<div class="box-content">
 						<div class="btn-toolbar">

@@ -49,6 +49,23 @@ public class UserServiceImpl implements UserService{
 	}
 
 
+	@Override
+	public int countUser() {
+		
+		return userDao.countUser();
+	}
+
+
+	@Override
+	public List<User> AllUser() {
+		
+		return userDao.AllUser();
+	}
+
+
+	
+
+
 
 
 }
