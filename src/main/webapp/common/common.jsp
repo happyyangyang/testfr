@@ -6,6 +6,8 @@
 
 <!-- The styles -->
 <link rel="stylesheet" href="${ctx}/bower_components/zTree/css/demo.css" type="text/css">
+<link rel="stylesheet" href="${ctx}/css/bootstrap.css" type="text/css">
+<link rel="stylesheet" href="${ctx}/css/bootstrap-table.css" type="text/css">
 <link rel="stylesheet" href="${ctx}/bower_components/zTree/css/zTreeStyle/zTreeStyle.css" type="text/css">
 <link href="${ctx}/css/bootstrap-cerulean.min.css" rel="stylesheet">
 <link href="${ctx}/css/charisma-app.css" rel="stylesheet">
@@ -27,6 +29,9 @@
 
 <!-- jQuery -->
 <script src="${ctx}/bower_components/jquery/jquery.min.js"></script>
+
+<script src="${ctx}/js/bootstrap-table.js"></script>
+<script src="${ctx}/js/bootstrap-table-zh-CN.min.js"></script>
 <!-- The HTML5 shim, for IE6-8 support of HTML5 elements -->
 <!--[if lt IE 9]>
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>

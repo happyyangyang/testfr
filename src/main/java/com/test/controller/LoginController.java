@@ -177,15 +177,6 @@ public class LoginController {
 		 return "forward:sucess.do";
 		 
 	 }
-	 //获取测试的数据列表
-	 @RequestMapping("/list")
-	 @ResponseBody
-	 public List<User> GetDepartment(int limit, int offset, String departmentname, String statu){
-		 int total = userService.countUser();
-		 List<User> list = new ArrayList<User>();
-		 list = userService.AllUser();
-		 return list;
-	 }
 	
 
 }

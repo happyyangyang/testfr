@@ -1,18 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ include file="/common/common.jsp"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
-<script src="jquery.min.js"></script>
-<!-- bootstrap组件引用 -->
+<!--  <script src="jquery.min.js"></script>-->
+<!-- bootstrap组件引用
  <script src="bootstrap.js"></script>
- <link href="bootstrap.css" rel="stylesheet" />
-<!-- bootstrap table组件以及中文包的引用 -->
+ <link href="bootstrap.css" rel="stylesheet" /> -->
+<!-- bootstrap table组件以及中文包的引用 
 <script src="bootstrap-table.js"></script>
  <link href="bootstrap-table.css" rel="stylesheet" />
- <script src="bootstrap-table-zh-CN.js"></script>
+ <script src="bootstrap-table-zh-CN.min.js"></script>-->
  <script type="text/javascript">
  $(function () {
 	 
@@ -31,8 +32,8 @@
 	 //初始化Table
 	 oTableInit.Init = function () {
 	 $('#tb_departments').bootstrapTable({
-	 url: '${appctx}/user/list.do', //请求后台的URL（*）
-	 method: 'get', //请求方式（*）
+	 url: '${ctx}/test/GetDepartment.do', //请求后台的URL（*）
+	 method: 'post', //请求方式（*）
 	 toolbar: '#toolbar', //工具按钮用哪个容器
 	 striped: true, //是否显示行间隔色
 	 cache: false, //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
@@ -40,7 +41,7 @@
 	 sortable: false, //是否启用排序
 	 sortOrder: "asc", //排序方式
 	 queryParams: oTableInit.queryParams,//传递参数（*）
-	 sidePagination: "server", //分页方式：client客户端分页，server服务端分页（*）
+	 sidePagination: "client", //分页方式：client客户端分页，server服务端分页（*）
 	 pageNumber:1, //初始化加载第一页，默认第一页
 	 pageSize: 10, //每页的记录行数（*）
 	 pageList: [10, 25, 50, 100], //可供选择的每页的行数（*）
@@ -58,17 +59,23 @@
 	 columns: [{
 	 checkbox: true
 	 }, {
-	 field: 'Name',
-	 title: '部门名称'
+	 field: 'id',
+	 title: 'id'
 	 }, {
-	 field: 'ParentName',
-	 title: '上级部门'
+	 field: 'username',
+	 title: '用户名'
 	 }, {
-	 field: 'Level',
-	 title: '部门级别'
+	 field: 'birthday',
+	 title: '生日'
 	 }, {
-	 field: 'Desc',
-	 title: '描述'
+	 field: 'address',
+	 title: '地址'
+	 },{
+	 field: 'pwd',
+     title: '密码'
+	 },{
+	 field: 'picurl',
+	 title: '图片地址'
 	 }, ]
 	 });
 	 };
