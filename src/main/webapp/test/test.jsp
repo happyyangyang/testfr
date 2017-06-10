@@ -103,6 +103,7 @@
 		 
 		 return oInit;
 		};
+		
  	
  </script>
 </head>
@@ -131,7 +132,7 @@
 	 
 	 <div id="toolbar" class="btn-group">
 	 <button id="btn_add" type="button" class="btn btn-default">
-	 <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
+	 <span class="glyphicon glyphicon-plus" aria-hidden="true" onclick=""></span>新增
 	 </button>
 	 <button id="btn_edit" type="button" class="btn btn-default">
 	 <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改

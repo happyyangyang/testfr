@@ -1,5 +1,6 @@
 package com.test.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -8,6 +9,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.test.model.Project;
 import com.test.model.User;
 import com.test.model.UserDog;
 import com.test.model.UserExample;
@@ -73,23 +76,48 @@ public class LoginController {
 	 
 	 @RequestMapping("/sucesspojo")
 	 public String sucesspojo(User user,HttpServletRequest request){ 
-		 UserExample userExample = new UserExample();
-		 Criteria criteria = userExample.createCriteria();
-		 System.out.println(user.getUsername()+user.getPwd());
-		 criteria.andUsernameEqualTo("admin");
-		 //criteria.andPicurlEqualTo(user.getPwd());
-		 List<User> list =userService.selectByExample(userExample);
-		 System.out.println(userExample);
-		 System.out.println(list.size());
-		 if(list.size()!=0){
+		
+		 User u =userService.getUserByNameAndPwd(user);
+		
+		 if(u!=null){
 			 
 			 request.getSession().setAttribute("loginUser",user);
+			 System.out.println("登录user："+request.getSession().getAttribute("loginUser"));
 			 return "main";
 		 }
 		 else{
 			 return "fail";
 		 }
 		 
+	 }
+	 
+	 
+	 //退出操作
+	 @RequestMapping("/exit")
+	 public void exti(HttpServletResponse response,HttpServletRequest request)throws IOException{
+		 request.getSession().removeAttribute("loginUser");
+		 System.out.println("===========退出的user"+request.getSession().getAttribute("loginUser"));
+		 response.sendRedirect(request.getContextPath()+"/login.jsp");
+		 
+	 }
+	 
+	 //注册
+	 @RequestMapping(value="/register")
+	 @ResponseBody
+	 public Map<String,String> register(@RequestBody User user,HttpServletRequest request){
+		 Map<String,String>map  = new HashMap<String,String>();
+		 Map<String,String>arg  = new HashMap<String,String>();
+		 arg.put("username", user.getUsername());
+		 List<User> list = userService.getUsers(arg);
+		 if(list!=null && list.size()>0){
+			 map.put("result", "nameIsExist");
+			 
+		 }else{
+			 userService.insert(user);
+			 map.put("result", "success");
+			
+		 }
+		 return map;
 	 }
 	 
 	 //自定义符合类型对象绑定
@@ -177,6 +205,12 @@ public class LoginController {
 		 return "forward:sucess.do";
 		 
 	 }
+	 
+	    @RequestMapping(value = "saveUser", method = {RequestMethod.POST},consumes="application/json") 
+	    @ResponseBody  
+	    public void saveUser(@RequestBody List<User> user) { 
+	        System.out.println("ceshi");
+	    }
 	
 
 }

@@ -1,5 +1,7 @@
 package com.test.controller;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
@@ -32,6 +34,16 @@ public class ProjectController {
 		return"new";
 		
 	}
-	
+	@RequestMapping("/getlist")
+	@ResponseBody
+	public List<Apinfor> getlist(HttpServletRequest request){
+		User loginUser = (User)request.getSession().getAttribute("loginUser");
+		System.out.println("获取list的user："+loginUser);
+		if(loginUser!=null){
+			return apinforService.AllApinfor();
+		}
+		return null;
+		
+	}
 	
 }

@@ -24,32 +24,21 @@
    		}else if($("#password").val()!=$("#password1").val()){
    			$("#alertId").show();
    			$("#alertContent").html("二次输入的密码不一致");
-   		}else if($("#telephone").val()==null||(!$("#telephone").val().length>0)||(!phoneRegex.test($("#telephone").val()))){
-   			$("#alertId").show();
-   			$("#alertContent").html("请输入合法的手机号，如：15899999999");
-   		}else if($("#security").val()==null||(!$("#security").val().length>0)){
-   			$("#alertId").show();
-   			$("#alertContent").html("验证码不能为空");
    		}else{
    			$.ajax({
-   		        url: '${appctx}/loginController/register',
+   		        url: '${appctx}/user/register.do',
    		        async: true,
    		        contentType:"application/json",
    		        type: 'POST',
-   		        data: JSON.stringify({name:$("#username").val(),pwd:$("#password").val(),phone:$("#telephone").val(),securityCode:$("#security").val()}),
+   		        dataType: "json",
+   		        data: JSON.stringify({username:$("#username").val(),pwd:$("#password").val()}),
    		        success: function(data , textStatus){
    		        	$("#alertId").show();
    			          if(data.result=="success"){
    			        	  countdown = 5;
    			        	  settime1();
-   			          }else if(data.result=="securityError"){
-   			        	  $("#alertContent").html("验证码验证失败，请重新输入！");
-   			          }else if(data.result=="securityTimeOut"){
-   			        	  $("#alertContent").html("验证码超过10分钟，已失效！请重新获取验证码");
    			          }else if(data.result=="nameIsExist"){
    			        	  $("#alertContent").html("该用户名已经被注册，请重新输入！");
-   			          }else if(data.result=="phoneIsExist"){
-   			        	  $("#alertContent").html("该手机号已经被注册，请重新输入！");
    			          }else if(data.result=="error"){
    			        	  $("#alertContent").html("注册失败，请联系管理员");
    			          }
@@ -118,10 +107,10 @@
     	} 
     	function settime1(){
     		if (countdown == 0) { 
-    			location.href="${appctx}/index.jsp";
+    			location.href="${appctx}/login.jsp";
         		return;
         	} else { 
-        		$("#alertContent").html("注册成功，"+countdown+"秒后跳转到<a herf='/index.jsp'>登录<a>页面");
+        		$("#alertContent").html("注册成功，"+countdown+"秒后跳转到<a herf='/login.jsp'>登录<a>页面");
         		countdown--; 
         	} 
     		setTimeout(function() { 
@@ -161,6 +150,7 @@
                         <input type="password" class="form-control" id="password1" placeholder="请再次输入密码">
                     </div>
                     <div class="clearfix"></div><br>
+                    <!-- 
                     <div class="input-group input-group-lg">
                         <span class="input-group-addon"><i class="glyphicon glyphicon-earphone red"></i></span>
                         <input type="text" class="form-control" id="telephone" maxlength="11" placeholder="请输入手机号">
@@ -173,7 +163,7 @@
                         <!-- <span>
                         	<button type="button" class="btn btn-primary" id="loginId" onclick="loginFunction()">获取验证码</button>
                         </span> -->
-                    </div>
+                   <!--  </div> -->
                     <div class="clearfix"></div><br>
                     <div class="row">
 	                    <div class="col-md-6" style="text-align: left;padding-left:25px;"><a href="${appctx}/login.jsp">返回登录</a></div>

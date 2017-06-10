@@ -26,7 +26,7 @@ public interface UserMapper {
     @SelectProvider(type=UserSqlProvider.class, method="countByExample")
     int countByExample(UserExample example);
     
-    
+ 
     
     //自定义
     @Select({

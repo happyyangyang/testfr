@@ -250,7 +250,7 @@
                     <div class="clearfix"></div><br>
                     <div class="input-group input-group-lg">
                         <span class="input-group-addon"><i class="glyphicon glyphicon-earphone red"></i></span>
-                        <input type="text" class="form-control" id="telephone" maxlength="11" placeholder="请输入手机号">
+                       <!-- <input type="text" class="form-control" id="telephone" maxlength="11" placeholder="请输入手机号"> --> 
                     </div>
                 </fieldset>
             </form>

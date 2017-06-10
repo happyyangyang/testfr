@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="/common/bootstraptable.jsp"%>
+<%@ include file="/common/common.jsp"%>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -21,19 +21,38 @@
 	 //1.初始化Table
 	 var oTable = new TableInit();
 	 oTable.Init();
+	
+	 //新增操作
+	 $("#btn_add").click(function(){
+		 location.href='${appctx}/jsp/new.jsp';
+			});
 	 
-	 //2.初始化Button的点击事件
-	 var oButtonInit = new ButtonInit();
-	 oButtonInit.Init();
+		//修改操作
+
+	 $("#btn_edit").click(function(){
+		 location.href='${appctx}/jsp/new.jsp';
+			});
+	 //
+	 $("#btn_edit").click(function(){
+		 location.href='${appctx}/jsp/updat.jsp';
+			});
+	 //查询btn_query
+	 $("#btn_query").click(function(){
+		 location.href='${appctx}/jsp/new.jsp';
+			});
 	 
 	});
+
+
+
+ 
  
  var TableInit = function () {
 	 var oTableInit = new Object();
 	 //初始化Table
 	 oTableInit.Init = function () {
 	 $('#tb_departments').bootstrapTable({
-	 url: '${appctx}/test/GetDepartment.do', //请求后台的URL（*）
+	 url: '${appctx}/interface/getlist.do', //请求后台的URL（*）
 	 method: 'post', //请求方式（*）
 	 toolbar: '#toolbar', //工具按钮用哪个容器
 	 striped: true, //是否显示行间隔色
@@ -52,32 +71,35 @@
 	 showRefresh: true, //是否显示刷新按钮
 	 minimumCountColumns: 2, //最少允许的列数
 	 clickToSelect: true, //是否启用点击选中行
-	 height: 500, //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
+	 height: 550, //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
 	 uniqueId: "ID", //每一行的唯一标识，一般为主键列
 	 showToggle:true, //是否显示详细视图和列表视图的切换按钮
 	 cardView: false, //是否显示详细视图
 	 detailView: false, //是否显示父子表
 	 columns: [{
 	 checkbox: true
-	 }, {
+	 },{  
+    //field: 'Number',//可不加  
+    title: '序号',//标题  可不加  
+    formatter: function (value, row, index) {  
+        return index+1;  }  
+	} ,
+	 {
 	 field: 'id',
 	 title: 'id'
 	 }, {
-	 field: 'username',
-	 title: '用户名'
+	 field: 'name',
+	 title: '接口名'
 	 }, {
-	 field: 'birthday',
-	 title: '生日'
+	 field: 'url',
+	 title: '接口地址'
 	 }, {
-	 field: 'address',
-	 title: '地址'
+	 field: 'method',
+	 title: '请求方法'
 	 },{
-	 field: 'pwd',
-     title: '密码'
-	 },{
-	 field: 'picurl',
-	 title: '图片地址'
-	 }, ]
+	 field: 'projectname',
+     title: '项目名'
+	 },]
 	 });
 	 };
 	 
@@ -105,6 +127,9 @@
 		 return oInit;
 		};
  	
+		
+	
+		 
  </script>
 </head>
 <body>
@@ -114,13 +139,13 @@
 	 <div class="panel-body">
 	 <form id="formSearch" class="form-horizontal">
 	 <div class="form-group" style="margin-top:15px">
-	 <label class="control-label col-sm-1" for="txt_search_departmentname">部门名称</label>
+	 <label class="control-label col-sm-1" for="txt_search_departmentname">项目名称</label>
 	 <div class="col-sm-3">
-	 <input type="text" class="form-control" id="txt_search_departmentname">
+	 <input type="text" class="form-control" id="txt_search_projectname">
 	 </div>
-	 <label class="control-label col-sm-1" for="txt_search_statu">状态</label>
+	 <label class="control-label col-sm-1" for="txt_search_statu">接口名称</label>
 	 <div class="col-sm-3">
-	 <input type="text" class="form-control" id="txt_search_statu">
+	 <input type="text" class="form-control" id="txt_search_name">
 	 </div>
 	 <div class="col-sm-4" style="text-align:left;">
 	 <button type="button" style="margin-left:50px" id="btn_query" class="btn btn-primary">查询</button>
@@ -132,13 +157,13 @@
 	 
 	 <div id="toolbar" class="btn-group">
 	 <button id="btn_add" type="button" class="btn btn-default">
-	 <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
+	 <span class="glyphicon glyphicon-plus" ></span>新增
 	 </button>
 	 <button id="btn_edit" type="button" class="btn btn-default">
-	 <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改
+	 <span class="glyphicon glyphicon-pencil" ></span>修改
 	 </button>
 	 <button id="btn_delete" type="button" class="btn btn-default">
-	 <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
+	 <span class="glyphicon glyphicon-remove" ></span>删除
 	 </button>
 	 </div>
 	 <table id="tb_departments"></table>
