@@ -25,12 +25,11 @@
 			</div>
             <form class="form-horizontal" action="${appctx}/interface/new.do" method="post">
                 <fieldset>
-                    <div class="input-group input-group-lg" style="width: 205px; ">
+                    <div class="input-group input-group-lg"  >
                         <span class="input-group-addon"><i class="glyphicon glyphicon-lock red"></i></span>
                        	 <input type="text" class="form-control" id="password" name="projectname" placeholder="请输入项目名">
                     </div>
-                    
-                    <div class="input-group input-group-lg" style="width: 173px; height: 40px">
+                    <div class="input-group input-group-lg" ><br>
                         <span class="input-group-addon"><i class="glyphicon glyphicon-lock red"></i></span>
                        	 <input type="text" class="form-control" id="password" name="name" placeholder="请输入接口名">
                     </div>

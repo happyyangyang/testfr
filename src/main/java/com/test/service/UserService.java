@@ -24,4 +24,6 @@ public interface UserService {
 	List<User> getUsers(Map<String,String> map);
 	
 	int insert(User record);
+	
+	
 }
