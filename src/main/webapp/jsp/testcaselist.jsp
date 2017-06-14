@@ -52,7 +52,7 @@
 	 //初始化Table
 	 oTableInit.Init = function () {
 	 $('#tb_departments').bootstrapTable({
-	 url: '${appctx}/interface/getlist.do', //请求后台的URL（*）
+	 url: '${appctx}/testCase/getcaselist.do', //请求后台的URL（*）
 	 method: 'post', //请求方式（*）
 	 toolbar: '#toolbar', //工具按钮用哪个容器
 	 striped: true, //是否显示行间隔色
@@ -85,18 +85,35 @@
     title: '序号',//标题  可不加  
     formatter: function (value, row, index) {  
         return index+1;  }  
-	} , {
+	} ,{
+		 field: 'id',
+		 title: '用例id'
+		 } ,{
+	 field: 'casename',
+	 title: '用例名'
+	 },{
 	 field: 'name',
 	 title: '接口名'
-	 }, {
+	},{
 	 field: 'url',
-	 title: '接口地址'
+	 title: '请求URL',
+	 width: 80,
 	 }, {
 	 field: 'method',
 	 title: '请求方法'
 	 },{
 	 field: 'projectname',
-     title: '项目名'
+	 title: '项目名称'
+	 }, {
+	 field: 'scenario',
+	 title: '场景'
+	 }, {
+	 field: 'parmater',
+	 title: '参数',
+	 width: 10
+	 },{
+	 field: 'expect',
+     title: '期望结果'
 	 },]
 	 });
 	 };

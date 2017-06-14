@@ -14,6 +14,7 @@ import com.test.model.Testcase;
 import com.test.model.User;
 import com.test.service.CaseService;
 import com.test.service.UserService;
+import com.test.vo.CaseVo;
 
 @Controller
 @RequestMapping("testCase")
@@ -44,10 +45,25 @@ public class TestController {
 		 User user = (User)request.getSession().getAttribute("loginUser");
 		 if(user!=null){
 			 return caseService.getlist();
+			 //return caseService.getCaseList();
 		 }
 		return null;
 		
 		 
 	 }
+	//获取列表
+		 @RequestMapping("/getcaselist")
+		 @ResponseBody
+		 public List<CaseVo> getcaselist(HttpServletRequest request){
+			 
+			 User user = (User)request.getSession().getAttribute("loginUser");
+			 if(user!=null){
+				 //return caseService.getlist();
+				 return caseService.getCaseList();
+			 }
+			return null;
+			
+			 
+		 }
 
 }

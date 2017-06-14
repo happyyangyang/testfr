@@ -105,8 +105,8 @@
 							
 							<li class="accordion"><a href="#"><i class="glyphicon glyphicon-plus"></i><span>接口管理</span></a>
 								<ul class="nav nav-pills nav-stacked">
-									<li><a class="ajax-link"  target='main_target' href="${appctx}/jsp/newHttp.jsp"><i class="glyphicon glyphicon-align-justify"></i><span>Http接口</span></a></li>
-									<li><a class="ajax-link"  target='main_target' href="${appctx}/jsp/newtestcase.jsp"><i class="glyphicon glyphicon-calendar"></i><span>测试用例</span></a></li>
+									<li><a class="ajax-link"  target='main_target' href="${appctx}/jsp/apilist.jsp"><i class="glyphicon glyphicon-align-justify"></i><span>Http接口</span></a></li>
+									<li><a class="ajax-link"  target='main_target' href="${appctx}/jsp/testcaselist.jsp"><i class="glyphicon glyphicon-calendar"></i><span>测试用例</span></a></li>
 									<li><a class="ajax-link"  target='main_target' href="${appctx}/jsp/newWebservice.jsp"><i class="glyphicon glyphicon-th"></i><span>Webservice</span></a></li>
 								</ul>
 							</li>
