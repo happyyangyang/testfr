@@ -9,5 +9,12 @@ public interface ApinforService {
 	int insert(Apinfor record);
 	
 	List<Apinfor> AllApinfor();
+	
+	 int deleteByPrimaryKey(String id);
+	 
+	 Apinfor selectByPrimaryKey(String id);
+	 
+	 int deleteByPrimaryKeybatch(List<String> list);
+
 
 }

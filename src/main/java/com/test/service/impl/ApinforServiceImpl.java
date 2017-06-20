@@ -27,5 +27,27 @@ public class ApinforServiceImpl implements ApinforService {
 		
 		return apinforDao.AllApinfor();
 	}
+	@Override
+	public int deleteByPrimaryKey(String id) {
+		
+		return apinforDao.deleteByPrimaryKey(id);
+	}
+	@Override
+	public Apinfor selectByPrimaryKey(String id) {
+		
+		return apinforDao.selectByPrimaryKey(id);
+	}
+	@Override
+	public int deleteByPrimaryKeybatch(List<String> list) {
+		int total=0,j;
+		for(int i=0;i<list.size();i++){
+			j =apinforDao.deleteByPrimaryKey(list.get(i));
+			if(j>0){
+				total++;
+			}
+			
+		}
+		return total ;
+	}
 
 }

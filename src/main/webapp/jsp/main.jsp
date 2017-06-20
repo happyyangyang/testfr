@@ -107,7 +107,7 @@
 								<ul class="nav nav-pills nav-stacked">
 									<li><a class="ajax-link"  target='main_target' href="${appctx}/jsp/apilist.jsp"><i class="glyphicon glyphicon-align-justify"></i><span>Http接口</span></a></li>
 									<li><a class="ajax-link"  target='main_target' href="${appctx}/jsp/testcaselist.jsp"><i class="glyphicon glyphicon-calendar"></i><span>测试用例</span></a></li>
-									<li><a class="ajax-link"  target='main_target' href="${appctx}/jsp/newWebservice.jsp"><i class="glyphicon glyphicon-th"></i><span>Webservice</span></a></li>
+									<li><a class="ajax-link"  target='main_target' href="${appctx}/jsp/testcaseexecute.jsp"><i class="glyphicon glyphicon-th"></i><span>用例执行</span></a></li>
 								</ul>
 							</li>
 							<li class="accordion"><a href="#"><i class="glyphicon glyphicon-plus"></i><span>权限管理</span></a>
@@ -149,7 +149,7 @@
 			</div>
 		</div>
 		<footer style="text-align: center">
-       		<p style="text-align:center;">Copyright@2016-2020 @author lizhen</p>
+       		<p style="text-align:center;">Copyright</p>
    		</footer>
 	</div>
 </body>

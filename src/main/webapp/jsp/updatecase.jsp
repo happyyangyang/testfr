@@ -12,30 +12,64 @@
 	content="Charisma, a fully featured, responsive, HTML5, Bootstrap admin template.">
 <meta name="author" content="Muhammad Usman">
 <script type="text/javascript">
-
-
+$(function(){
+	//加载接口信息
+	Apiinfors();
+})
+	//加载接口信息
+	function Apiinfors(){
+	$.ajax({
+		type : "post",
+		url : "${appctx}/interface/getlist.do",
+		dataType : "json",
+		data : {
+			//merserialno : $("#merserialno").val()
+		},
+		success : function(data) {
+			var html="";
+			html+="<div data-model='bbb' class='tride-type'>";
+			html+="<select class='business-area chosen-select chosen-select-spaceal' id='apiname' name='apiname'>";
+			html+="<option value='${testcase.expect}'>""</option>";
+			for (var i = 0; i < data.length; i++) {
+				html+="<option value='" + data[i].id + "'>"+ data[i].name  + "</option>";
+			}
+			
+			$("#receiveBusiDivision").html(html);
+			$('.chosen-select').chosen();
+			selectUpdate();
+			//ae.bindEle();
+		}
+	});
+	
+	
+}
+	
+function selectUpdate() {
+	$('select').trigger('chosen:updated');
+}
+	
 	function cancelFun(){
-		window.location.href="${appctx}/jsp/apilist.jsp";
+		window.location.href="${appctx}/jsp/testcaselist.jsp";
 	}
 	
 	
 	
   	function registerFunction(){
-   		if($("#projectname").val()==null||(!$("#projectname").val().length>0)){
-   			alert("请输入项目名");
-   		}else if($("#name").val()==null||(!$("#name").val().length>0)){
-   			alert("请输入接口名");
-   		}else if($("#url").val()==null||(!$("#url").val().length>0)){
-   			alert("请输入接口地址");
-   		}else if($("#method").val()==null||(!$("#method").val().length>0)){
-   			alert("请输入请求方法");
+   		if($("#casename").val()==null||(!$("#casename").val().length>0)){
+   			alert("请输入用例名");
+   		}else if($("#scenario").val()==null||(!$("#scenario").val().length>0)){
+   			alert("请输入场景");
+   		}else if($("#parmater").val()==null||(!$("#parmater").val().length>0)){
+   			alert("请输入参数");
+   		}else if($("#expect").val()==null||(!$("#expect").val().length>0)){
+   			alert("请输入期望结果");
    		}else{
    			$.ajax({
-   		        url: '${appctx}/interface/newapi.do',
+   		        url: '${appctx}/testCase/newtestcase.do',
    		        async: true,
    		        contentType:"application/json",
    		        type: 'POST',
-   		        data: JSON.stringify({projectname:$("#projectname").val(),name:$("#name").val(),url:$("#url").val(),method:$("#method").val()}),
+   		        data: JSON.stringify({apiid:$("#apiname").val(),casename:$("#casename").val(),scenario:$("#scenario").val(),parmater:$("#parmater").val(),expect:$("#expect").val()}),
    		        success: function(data , textStatus){
    		        	
    			          if(data.result=="success"){
@@ -55,7 +89,7 @@
    function settime1(){
 		if (countdown == 5) { 
 			alert("新增成功，"+"点击确定后跳转到接口列表页面");
-			location.href="${appctx}/jsp/apilist.jsp";
+			location.href="${appctx}/jsp/testcaselist.jsp";
  		    return;
  	     } 
 	}
@@ -66,7 +100,7 @@
 		<div>
 			<ul class="breadcrumb">
 				<li><a href="#">接口管理</a></li>
-				<li><a href="#">新增接口</a></li>
+				<li><a href="#">修改测试用例</a></li>
 			</ul>
 		</div>
 
@@ -82,13 +116,16 @@
 						<div class="btn-toolbar">
 							<div class="pull-left"><br><br><br>
 								<div class="input-append">
-								项目：<input type="text" placeholder="项目名" id="projectname" name="projectname" style="width: 270px; height: 43px"/>
-								接口名称：<input type="text" placeholder="接口名称" id="name" name="name" style="width: 235px;height: 43px "/>	
+								用例名：<input type="text" placeholder="用例名" id="casename" name="casename" value="${testcase.casename}" style="width: 270px; height: 43px"/>
+								场景：<input type="text" placeholder="场景" id="scenario" name="scenario" value="${testcase.scenario}" style="width: 235px;height: 43px "/>	
 								</div><br><br><br>
 								<div class="input-append">
-								接口地址：<input type="text" placeholder="接口地址" id="url"  name="url" style="width: 568px; height: 43px"/>
-								请求方法：<input type="text" placeholder="请求方法" id="method"  name="method" style="height: 43px; "/>	
+								参数：<textarea rows="10" cols="60" id="parmater" >${testcase.parmater}</textarea> 
+								期望结果：<input type="text" placeholder="期望结果" id="expect" value="${testcase.expect}"  name="expect" style="height: 43px; "/>	
 								</div><br><br><br>
+								
+								接口名：<div data-container="bbb" id="receiveBusiDivision"  style="width: 905px; "></div><br><br><br>
+								
 								<p class="center col-md-5">
                     				<button type="button" class="btn btn-primary" onclick="registerFunction()">提交</button>
                     				<button type="button" class="btn btn-primary" onclick="cancelFun()">取消</button>
