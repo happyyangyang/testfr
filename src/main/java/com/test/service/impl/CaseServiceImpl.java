@@ -1,10 +1,14 @@
 package com.test.service.impl;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import org.testng.TestNG;
 
 import com.test.dao.TestcaseMapper;
 
@@ -55,6 +59,74 @@ public class CaseServiceImpl implements CaseService {
 			
 		}
 		return total ;
+	}
+	//批量生成testng类
+	@Override
+	public Boolean getbatchexe(List<String> list) {
+		Boolean flag = false;
+		List<Testcase> cases = new ArrayList<Testcase>();
+		for(int i=0;i<list.size();i++){
+			Testcase testcase = caseDao.selectByPrimaryKey(list.get(i)) ;
+			cases.add(testcase);
+		}
+		String rt = "\r\n";
+		String tab ="\t";
+		  
+		  
+		  StringBuilder method = new StringBuilder();
+		  for(int i=0;i<cases.size();i++){
+			  String s = "public void " + cases.get(i).getCasename()+"()" +"{"+rt
+					  + "  System.out.println(\"price markup....\");"+ rt
+					    + "  s.sell();" + " }";
+			method.append(s);	  
+		  }
+		  String source = "package com.test.testcase;" + ""+ rt
+				    + "public class MyTestCase"+ rt  + "{"+ rt  + "private String s;" + rt +
+				    "public MyTestCase(String s)"+ rt  + " {" + "  this.s = s;"+ rt
+				    + " }" + rt +
+
+				   method + rt+
+				    "}";
+		  String fileName = "classpath://com//test//testcase//MyTest.java";
+				  File f = new File(fileName);
+				  FileWriter fw=null;
+				try {
+					fw = new FileWriter(f);
+					 fw.write(source);
+					 fw.flush();
+					 fw.close();
+				} catch (IOException e) {
+					
+					e.printStackTrace();
+				}finally{
+					
+					  
+					  
+				}
+				
+		  
+		return null;
+	}
+	@Override
+	public CaseVo selectByid(String id) {
+	
+		return caseDao.selectByid(id);
+	}
+	@Override
+	public int updateByPrimaryKeySelective(Testcase record) {
+		// TODO Auto-generated method stub
+		return caseDao.updateByPrimaryKey(record);
+	}
+	@Override
+	public Boolean execase() {
+		TestNG testng = new TestNG();
+		//testng.setTestJar(jarPath);
+		List suites = new ArrayList();
+		suites.add("D:\\win\\testng.xml");//path to xml..
+		testng.setTestSuites(suites);
+	//	testng.addListener(new TestListenerAdapter());
+		testng.run();
+		return null;
 	}
 
 }

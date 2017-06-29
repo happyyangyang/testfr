@@ -29,12 +29,13 @@ $(function(){
 			var html="";
 			html+="<div data-model='bbb' class='tride-type'>";
 			html+="<select class='business-area chosen-select chosen-select-spaceal' id='apiname' name='apiname'>";
-			html+="<option value='${testcase.expect}'>""</option>";
+			html+="<option value='请选择'>"+"请选择"+"</option>";
 			for (var i = 0; i < data.length; i++) {
 				html+="<option value='" + data[i].id + "'>"+ data[i].name  + "</option>";
 			}
 			
 			$("#receiveBusiDivision").html(html);
+			$("#apiname option[value='"+$("#interfacename").val()+"']").attr("selected","selected");
 			$('.chosen-select').chosen();
 			selectUpdate();
 			//ae.bindEle();
@@ -63,13 +64,15 @@ function selectUpdate() {
    			alert("请输入参数");
    		}else if($("#expect").val()==null||(!$("#expect").val().length>0)){
    			alert("请输入期望结果");
+   		}else if($("#apiname").val()==null||(!$("#apiname").val()=='请选择')){
+   			alert("请输入期望结果");
    		}else{
    			$.ajax({
-   		        url: '${appctx}/testCase/newtestcase.do',
+   		        url: '${appctx}/testCase/updatetestcase.do',
    		        async: true,
    		        contentType:"application/json",
    		        type: 'POST',
-   		        data: JSON.stringify({apiid:$("#apiname").val(),casename:$("#casename").val(),scenario:$("#scenario").val(),parmater:$("#parmater").val(),expect:$("#expect").val()}),
+   		        data: JSON.stringify({id:$("#id").val(),apiid:$("#apiname").val(),casename:$("#casename").val(),scenario:$("#scenario").val(),parmater:$("#parmater").val(),expect:$("#expect").val()}),
    		        success: function(data , textStatus){
    		        	
    			          if(data.result=="success"){
@@ -125,7 +128,8 @@ function selectUpdate() {
 								</div><br><br><br>
 								
 								接口名：<div data-container="bbb" id="receiveBusiDivision"  style="width: 905px; "></div><br><br><br>
-								
+								<input  type="hidden"  id="interfacename" value="${testcase.apiid}">
+								<input  type="hidden"  id="id" value="${testcase.id}">
 								<p class="center col-md-5">
                     				<button type="button" class="btn btn-primary" onclick="registerFunction()">提交</button>
                     				<button type="button" class="btn btn-primary" onclick="cancelFun()">取消</button>
@@ -140,6 +144,8 @@ function selectUpdate() {
 				</div>
 			</div>
 		</div>
+		
+		
 	</div>
 	<hr>
 	<div class="modal fade" id="myModal" tabindex="-1" role="dialog"

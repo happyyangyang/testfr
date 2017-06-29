@@ -10,14 +10,58 @@
  <script type="text/javascript">
  function settime1(){
 		if (countdown == 5) { 
-			alert("操作成功，"+"点击确定后跳转到接口列表页面");
-			location.href="${appctx}/jsp/testcaselist.jsp";
+			alert("批量生成可执行文件成功，"+"点击确定后跳转到接口列表页面");
+			location.href="${appctx}/jsp/testcaseexecute.jsp";
 		    return;
 	     } 
 	}
 
- //update 
+ //批量生成可执行文件
+ function executebatch(arr){
+ 	 $.ajax({
+	        url: '${appctx}/testCase/getexebatchcase1.do',
+	        async: true,
+	        contentType:"application/json",
+	        type: 'POST',
+	        data: JSON.stringify(arr),
+	        success: function(data , textStatus){
+	        	
+		          if(data.result=="success"){
+		        	  countdown = 5;
+			          settime1();
+		          }else if(data.result=="error"){
+		        	  alert("批量生成失败");
+		          }
+	        },
+	        error: function(jqXHR , textStatus , errorThrown){
+	        	alert("系统异常，请联系管理员！");
+	        }
+	      });
+ } 
  
+ 
+ //执行文件
+ 
+  function execase(){
+ 	 $.ajax({
+	        url: '${appctx}/testCase/exebatchcase.do',
+	        async: true,
+	        contentType:"application/json",
+	        type: 'POST',
+	        success: function(data , textStatus){
+	        	
+		          if(data.result=="success"){
+		        	  countdown = 5;
+			          settime1();
+		          }else if(data.result=="error"){
+		        	  alert("批量生成失败");
+		          }
+	        },
+	        error: function(jqXHR , textStatus , errorThrown){
+	        	alert("系统异常，请联系管理员！");
+	        }
+	      });
+ } 
  function execute(rowid){
 	 location.href='${appctx}/testCase/updatecase.do?id='+rowid;
  }
@@ -29,12 +73,26 @@
 	 oTable.Init();
 	
 	 //批量成功可执行文件
+	
+	 //工具栏的删除
 	 $("#btn_executebatch").click(function(){
-		 location.href='${appctx}/jsp/newcase.jsp';
-			});
-	 
-		//修改操作
-
+		 var a= $('#tb_departments').bootstrapTable('getSelections'); 
+		 var arr = new Array();
+		 if(a.length==0){
+		 	alert("请选择一行");
+		 }else {
+		 	for(var i=0;i<a.length;i++){
+		 		arr[i] = a[i].id
+		 		//alert(arr[i]);
+		 	}
+		 	executebatch(arr);
+		 }
+		 
+	} )
+	
+	$("#btn_execute").click(function(){
+			execase();
+		})
 	 
 	});
 

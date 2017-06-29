@@ -1,17 +1,27 @@
 package com.test.controller;
 
+import java.io.File;
+import java.io.FileFilter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.tools.JavaCompiler;
+import javax.tools.JavaCompiler.CompilationTask;
+import javax.tools.StandardJavaFileManager;
+import javax.tools.ToolProvider;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.testng.TestNG;
 
 import com.test.model.Apinfor;
 import com.test.model.Testcase;
@@ -125,14 +135,133 @@ public class TestController {
 			return map;
 						
 			}  
+			
+			//更新用例updatetestcase
+
+			@RequestMapping("/updatetestcase")
+			@ResponseBody
+			public Map<String,String> updatetestcase(@RequestBody Map<String,String> parm,HttpServletRequest request){
+				Testcase testcase = new Testcase();
+				testcase.setId(parm.get("id"));
+				testcase.setCasename(parm.get("casename"));
+				testcase.setScenario(parm.get("scenario"));
+				testcase.setParmater(parm.get("parmater"));
+				testcase.setExpect(parm.get("expect"));
+				testcase.setApiid(parm.get("apiid"));
+				Map<String,String> map = new HashMap<String,String>();
+				User loginUser = (User)request.getSession().getAttribute("loginUser");
+				if(loginUser!=null){
+					int num = caseService.updateByPrimaryKeySelective(testcase);
+					if(num!=0){
+						map.put("result", "success");
+						
+					}else{
+						map.put("result", "error");
+					}
+				}
+				return map;
+				
+			} 
 			//跳到修改api页面toupdatejsp
 			@RequestMapping("/updatecase")
 			public String updatecase(String id,HttpServletRequest request){
+				//CaseVo casevo = caseService.selectByid(id);
 				Testcase testcase = caseService.selectByPrimaryKey(id);
 				//前端也value=“S{Attributename.属性}”
 				request.setAttribute("testcase", testcase);
+				
 				return "updatecase";
 
 			}
+			//批量生成可执行文件
+			
+			@RequestMapping("/getexebatchcase1")
+			@ResponseBody
+			public Map<String,String> getexebatchcase1(@RequestBody List<String> parm,HttpServletRequest request){
+				System.out.println(System.getProperty("user.dir"));
+				System.out.println(request.getContextPath());
+				String yhqpath = request.getContextPath()+"\\WEB-INF\\classes\\com\\test\\testcase\\MyTest.java";
+				System.out.println(yhqpath);
+				Map<String,String> map = new HashMap<String,String>();
+				String path = request.getSession().getServletContext().getRealPath("com.test.testcase");
+				User loginUser = (User)request.getSession().getAttribute("loginUser");
+				if(loginUser!=null){
+					
+					Boolean flag = false;
+					List<Testcase> cases = new ArrayList<Testcase>();
+					for(int i=0;i<parm.size();i++){
+						Testcase testcase = caseService.selectByPrimaryKey(parm.get(i)) ;
+						cases.add(testcase);
+					}
+					String rt = "\r\n";
+					String tab ="\t";
+					  
+					  
+					  StringBuilder method = new StringBuilder();
+					  for(int i=0;i<cases.size();i++){
+						  String s = "@Test"+rt+"public void " + cases.get(i).getCasename()+"()" +"{"+rt
+								  + "  System.out.println(\"price markup....\");"+ rt
+								   + " }"+rt;
+						method.append(s);	  
+					  }
+					  String imp ="import org.testng.annotations.Test;";
+					  String source = "package com.test.testcase;" + ""+ rt+imp+rt
+							    + "public class MyTest"+ rt  + "{" + rt +
+							    method + rt+
+							    "}";
+					  String fileName = "D:\\win\\MyTest.java";
+							  File f = new File(fileName);
+							  FileWriter fw=null;
+							try {
+								fw = new FileWriter(f);
+								 fw.write(source);
+								 fw.flush();
+								 fw.close();
+							} catch (IOException e) {
+								
+								e.printStackTrace();
+							}finally{
+								
+								  
+								  
+							}
+							
+					 //编译
+							try {
+								String encoding ="UTF-8";
+								String jars="D:\\win\\testng-6.9.10.jar";
+								String targetDir="D:\\win";
+								String sourceDir="D:\\win";
+								
+								JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
+								StandardJavaFileManager fileMgr = compiler.getStandardFileManager(null,null, null);
+								Iterable units = fileMgr.getJavaFileObjects(fileName);
+								Iterable<String> options = Arrays.asList("-encoding", encoding, "-classpath", jars, "-d", targetDir, "-sourcepath", sourceDir);
+								CompilationTask t = compiler.getTask(null, fileMgr, null, options, null,units);
+								t.call();
+								fileMgr.close();
+								} catch (IOException e) {
+
+								System.out.println("编译"+e.toString());
+								}	
+							
+					
+				}
+			return map;
+						
+			}  
+			
+			@RequestMapping("/exebatchcase")
+			@ResponseBody
+			public Map<String,String> exebatchcase(HttpServletRequest request){
+				Map<String,String> map = new HashMap<String,String>();
+				String path = request.getSession().getServletContext().getRealPath("com.test.testcase");
+				User loginUser = (User)request.getSession().getAttribute("loginUser");
+				if(loginUser!=null){
+					Boolean flag = caseService.execase();
+				}
+				return map;
+						
+			}  
 
 }

@@ -136,6 +136,24 @@ public interface TestcaseMapper {
     })
     List<CaseVo> getCaseList1();
     
+    @Select({
+    	"select a.id,",
+    	"a.casename,",
+    	"a.scenario,",
+    	"a.parmater,",
+    	"a.expect,",
+    	"b.name,",
+    	"b.url,",
+    	"b.method,",
+    	"b.projectname",
+    	"from testcase a ,apinfor b",
+    	"where a.id = #{id,jdbcType=VARCHAR}",
+    	"and a.apiid = b.id"
+    		
+    })
+    CaseVo selectByid(String id);
+    
+    
     
     
     @Select({
@@ -150,6 +168,7 @@ public interface TestcaseMapper {
     	"b.projectname",
     	"from testcase a ,apinfor b",
     	"where a.apiid = b.id"
+    	
     		
     })
     List<CaseVo> getCaseList();

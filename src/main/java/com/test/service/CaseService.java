@@ -20,5 +20,13 @@ public interface CaseService {
 	
 	int insert(Testcase record);
 	
+	int updateByPrimaryKeySelective(Testcase record);
+	//批量生成testng类
+	Boolean getbatchexe(List<String>list);
+	
+	CaseVo selectByid(String id);
+	
+	
+	Boolean execase();
 
 }

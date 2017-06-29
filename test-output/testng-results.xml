@@ -1,17 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testng-results skipped="0" failed="0" total="1" passed="1">
+<testng-results skipped="0" failed="0" total="9" passed="9">
   <reporter-output>
   </reporter-output>
-  <suite name="Default suite" duration-ms="29" started-at="2017-06-19T03:07:05Z" finished-at="2017-06-19T03:07:05Z">
+  <suite name="Default suite" duration-ms="104" started-at="2017-06-22T08:12:57Z" finished-at="2017-06-22T08:12:57Z">
     <groups>
     </groups>
-    <test name="Default test" duration-ms="29" started-at="2017-06-19T03:07:05Z" finished-at="2017-06-19T03:07:05Z">
-      <class name="com.test.testcase.MyTestCase">
-        <test-method status="PASS" signature="function()[pri:0, instance:com.test.testcase.MyTestCase@525782df]" name="function" duration-ms="10" started-at="2017-06-19T11:07:05Z" finished-at="2017-06-19T11:07:05Z">
+    <test name="Default test" duration-ms="104" started-at="2017-06-22T08:12:57Z" finished-at="2017-06-22T08:12:57Z">
+      <class name="com.test.testcase.MyTest">
+        <test-method status="PASS" signature="search0010()[pri:0, instance:com.test.testcase.MyTest@e3b889b]" name="search0010" duration-ms="10" started-at="2017-06-22T16:12:57Z" finished-at="2017-06-22T16:12:57Z">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- function -->
-      </class> <!-- com.test.testcase.MyTestCase -->
+        </test-method> <!-- search0010 -->
+        <test-method status="PASS" signature="search0011()[pri:0, instance:com.test.testcase.MyTest@e3b889b]" name="search0011" duration-ms="1" started-at="2017-06-22T16:12:57Z" finished-at="2017-06-22T16:12:57Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- search0011 -->
+        <test-method status="PASS" signature="search003()[pri:0, instance:com.test.testcase.MyTest@e3b889b]" name="search003" duration-ms="2" started-at="2017-06-22T16:12:57Z" finished-at="2017-06-22T16:12:57Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- search003 -->
+        <test-method status="PASS" signature="search004()[pri:0, instance:com.test.testcase.MyTest@e3b889b]" name="search004" duration-ms="2" started-at="2017-06-22T16:12:57Z" finished-at="2017-06-22T16:12:57Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- search004 -->
+        <test-method status="PASS" signature="search005()[pri:0, instance:com.test.testcase.MyTest@e3b889b]" name="search005" duration-ms="2" started-at="2017-06-22T16:12:57Z" finished-at="2017-06-22T16:12:57Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- search005 -->
+        <test-method status="PASS" signature="search006()[pri:0, instance:com.test.testcase.MyTest@e3b889b]" name="search006" duration-ms="1" started-at="2017-06-22T16:12:57Z" finished-at="2017-06-22T16:12:57Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- search006 -->
+        <test-method status="PASS" signature="search007()[pri:0, instance:com.test.testcase.MyTest@e3b889b]" name="search007" duration-ms="2" started-at="2017-06-22T16:12:57Z" finished-at="2017-06-22T16:12:57Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- search007 -->
+        <test-method status="PASS" signature="search008()[pri:0, instance:com.test.testcase.MyTest@e3b889b]" name="search008" duration-ms="1" started-at="2017-06-22T16:12:57Z" finished-at="2017-06-22T16:12:57Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- search008 -->
+        <test-method status="PASS" signature="search009()[pri:0, instance:com.test.testcase.MyTest@e3b889b]" name="search009" duration-ms="1" started-at="2017-06-22T16:12:57Z" finished-at="2017-06-22T16:12:57Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- search009 -->
+      </class> <!-- com.test.testcase.MyTest -->
     </test> <!-- Default test -->
   </suite> <!-- Default suite -->
 </testng-results>

@@ -49,5 +49,10 @@ public class ApinforServiceImpl implements ApinforService {
 		}
 		return total ;
 	}
+	@Override
+	public int updateByPrimaryKeySelective(Apinfor record) {
+		
+		return apinforDao.updateByPrimaryKeySelective(record);
+	}
 
 }

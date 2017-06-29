@@ -15,6 +15,7 @@ public interface ApinforService {
 	 Apinfor selectByPrimaryKey(String id);
 	 
 	 int deleteByPrimaryKeybatch(List<String> list);
+	 int updateByPrimaryKeySelective(Apinfor record);
 
 
 }

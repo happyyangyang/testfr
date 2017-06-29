@@ -2,8 +2,16 @@ package com.test.testcase;
 
 import java.io.File;
 import java.io.FileWriter;
+import java.io.IOException;
+
+import javax.tools.JavaCompiler;
+import javax.tools.StandardJavaFileManager;
+import javax.tools.ToolProvider;
+import javax.tools.JavaCompiler.CompilationTask;
 
 import org.testng.annotations.Test;
+
+import com.beust.testng.TestNG;
 
 public class NewFile {
 
@@ -33,7 +41,20 @@ public class NewFile {
 				  fw.write(testngfile);
 				  fw.flush();
 				  fw.close();
+				  
+				  //编译
+					try {
+						JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
+						StandardJavaFileManager fileMgr = compiler.getStandardFileManager(null,null, null);
+						Iterable units = fileMgr.getJavaFileObjects(fileName);
+						CompilationTask t = compiler.getTask(null, fileMgr, null, null, null,units);
+						t.call();
+						fileMgr.close();
+						} catch (IOException e) {
 
+						System.out.println("编译"+e.toString());
+						}	
+			 
 	}
 
 }

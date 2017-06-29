@@ -38,11 +38,11 @@
    			alert("请输入请求方法");
    		}else{
    			$.ajax({
-   		        url: '${appctx}/interface/newapi.do',
+   		        url: '${appctx}/interface/updatejinterface.do',
    		        async: true,
    		        contentType:"application/json",
    		        type: 'POST',
-   		        data: JSON.stringify({projectname:$("#projectname").val(),name:$("#name").val(),url:$("#url").val(),method:$("#method").val()}),
+   		        data: JSON.stringify({id:$("#id").val(),projectname:$("#projectname").val(),name:$("#name").val(),url:$("#url").val(),method:$("#method").val()}),
    		        success: function(data , textStatus){
    		        	
    			          if(data.result=="success"){
@@ -96,6 +96,7 @@
 								接口地址：<input type="text" placeholder="接口地址" id="url"  name="url" value="${apinfor.url}"style="width: 568px; height: 43px"/>
 								请求方法：<input type="text" placeholder="请求方法" id="method"  name="apinfor.method" value="${apinfor.method}" style="height: 43px; "/>	
 								</div><br><br><br>
+								<input  type="hidden"  id="id" value="${apinfor.id}">
 								<p class="center col-md-5">
                     				<button type="button" class="btn btn-primary" onclick="registerFunction()">提交</button>
                     				<button type="button" class="btn btn-primary" onclick="cancelFun()">取消</button>

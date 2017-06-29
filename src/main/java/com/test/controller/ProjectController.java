@@ -96,6 +96,24 @@ public class ProjectController {
 				return map;
 							
 				} 
+		//修改保存的信息到数据库
+				@RequestMapping("/updatejinterface")
+				@ResponseBody
+				public Map<String,String> updatejinterface(@RequestBody Apinfor apinfor,HttpServletRequest request){
+					Map<String,String> map = new HashMap<String,String>();
+					User loginUser = (User)request.getSession().getAttribute("loginUser");
+					if(loginUser!=null){
+						int num = apinforService.updateByPrimaryKeySelective(apinfor);
+						if(num!=0){
+							map.put("result", "success");
+							
+						}else{
+							map.put("result", "error");
+						}
+					}
+					return map;
+					
+				} 		
 		
 		
 		//跳到修改api页面toupdatejsp
