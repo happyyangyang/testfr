@@ -28,6 +28,8 @@ import com.test.model.Testcase;
 import com.test.model.User;
 import com.test.service.CaseService;
 import com.test.service.UserService;
+import com.test.testcase.Exe;
+import com.test.util.ExeTestCase;
 import com.test.vo.CaseVo;
 
 
@@ -178,74 +180,52 @@ public class TestController {
 			@RequestMapping("/getexebatchcase1")
 			@ResponseBody
 			public Map<String,String> getexebatchcase1(@RequestBody List<String> parm,HttpServletRequest request){
-				System.out.println(System.getProperty("user.dir"));
 				System.out.println(request.getContextPath());
-				String yhqpath = request.getContextPath()+"\\WEB-INF\\classes\\com\\test\\testcase\\MyTest.java";
-				System.out.println(yhqpath);
+				//类的位置
+				String syhq = request.getSession().getServletContext().getRealPath("/WEB-INF/classes/MyTest.java");
+				String srcdir=request.getSession().getServletContext().getRealPath("/WEB-INF/classes");
+				//获得testng包
+				String jarpath1 = request.getSession().getServletContext().getRealPath("/WEB-INF/lib/testng-6.9.10.jar");
+				String jarpath2 = request.getSession().getServletContext().getRealPath("/WEB-INF/lib/yhq.jar");
+				String jarpath = jarpath1+";"+jarpath2;
+						
+				System.out.println("webinf的路径："+syhq);
 				Map<String,String> map = new HashMap<String,String>();
-				String path = request.getSession().getServletContext().getRealPath("com.test.testcase");
+				
 				User loginUser = (User)request.getSession().getAttribute("loginUser");
 				if(loginUser!=null){
-					
 					Boolean flag = false;
-					List<Testcase> cases = new ArrayList<Testcase>();
+					List<CaseVo> cases = new ArrayList<CaseVo>();
 					for(int i=0;i<parm.size();i++){
-						Testcase testcase = caseService.selectByPrimaryKey(parm.get(i)) ;
+						CaseVo testcase = caseService.selectByPrimaryKey(parm.get(i)) ;
 						cases.add(testcase);
 					}
+
+					
 					String rt = "\r\n";
 					String tab ="\t";
 					  
 					  
 					  StringBuilder method = new StringBuilder();
 					  for(int i=0;i<cases.size();i++){
-						  String s = "@Test"+rt+"public void " + cases.get(i).getCasename()+"()" +"{"+rt
-								  + "  System.out.println(\"price markup....\");"+ rt
+						  String s = "@Test"+rt+"public void " + cases.get(i).getCasename()+"()" +"{"+rt+tab+
+								  "httpurl = new MyHttpUrlConnect();"+rt+tab+" String res = httpurl.postrawBody(\""
+								  		+ ""+cases.get(i).getUrl()+"\","+"\""+
+								  cases.get(i).getParmater()+"\""+");"+rt+tab
+								  + "  System.out.println(res);"+ rt
 								   + " }"+rt;
 						method.append(s);	  
 					  }
-					  String imp ="import org.testng.annotations.Test;";
-					  String source = "package com.test.testcase;" + ""+ rt+imp+rt
-							    + "public class MyTest"+ rt  + "{" + rt +
+					  String imp ="import org.testng.annotations.Test;"+rt+"import com.test.util.MyHttpUrlConnect;";
+					  //"package com.test.testcase;"
+					  String source =  "package com.test.testcase;"+ rt+imp+rt
+							    + "public class MyTest"+ rt  + "{" + rt + "MyHttpUrlConnect httpurl = null;"+rt+
 							    method + rt+
 							    "}";
-					  String fileName = "D:\\win\\MyTest.java";
-							  File f = new File(fileName);
-							  FileWriter fw=null;
-							try {
-								fw = new FileWriter(f);
-								 fw.write(source);
-								 fw.flush();
-								 fw.close();
-							} catch (IOException e) {
-								
-								e.printStackTrace();
-							}finally{
-								
-								  
-								  
-							}
-							
-					 //编译
-							try {
-								String encoding ="UTF-8";
-								String jars="D:\\win\\testng-6.9.10.jar";
-								String targetDir="D:\\win";
-								String sourceDir="D:\\win";
-								
-								JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
-								StandardJavaFileManager fileMgr = compiler.getStandardFileManager(null,null, null);
-								Iterable units = fileMgr.getJavaFileObjects(fileName);
-								Iterable<String> options = Arrays.asList("-encoding", encoding, "-classpath", jars, "-d", targetDir, "-sourcepath", sourceDir);
-								CompilationTask t = compiler.getTask(null, fileMgr, null, options, null,units);
-								t.call();
-								fileMgr.close();
-								} catch (IOException e) {
-
-								System.out.println("编译"+e.toString());
-								}	
-							
-					
+					  
+					  ExeTestCase ec = new ExeTestCase();
+					  //String  s =ExeTestCase.class.getClassLoader().getResource("MyTest.java").getPath();
+					  ec.execase(syhq,source,srcdir,jarpath);
 				}
 			return map;
 						
@@ -255,10 +235,11 @@ public class TestController {
 			@ResponseBody
 			public Map<String,String> exebatchcase(HttpServletRequest request){
 				Map<String,String> map = new HashMap<String,String>();
-				String path = request.getSession().getServletContext().getRealPath("com.test.testcase");
+				//String path = request.getSession().getServletContext().getRealPath("com.test.testcase");
 				User loginUser = (User)request.getSession().getAttribute("loginUser");
+				String path = "D:\\win\\testng.xml";
 				if(loginUser!=null){
-					Boolean flag = caseService.execase();
+					Boolean flag = caseService.execase(path);
 				}
 				return map;
 						

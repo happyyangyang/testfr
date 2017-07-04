@@ -16,7 +16,7 @@ public interface CaseService {
 	
 	int deleteByPrimaryKeybatch(List<String>list);
 	
-	Testcase selectByPrimaryKey(String id);
+	CaseVo selectByPrimaryKey(String id);
 	
 	int insert(Testcase record);
 	
@@ -27,6 +27,6 @@ public interface CaseService {
 	CaseVo selectByid(String id);
 	
 	
-	Boolean execase();
+	Boolean execase(String filepath);
 
 }

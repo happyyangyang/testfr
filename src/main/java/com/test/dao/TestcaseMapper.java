@@ -99,9 +99,10 @@ public interface TestcaseMapper {
      */
     @Select({
         "select",
-        "id, casename, scenario, parmater, expect, apiid",
-        "from testcase",
-        "where id = #{id,jdbcType=VARCHAR}"
+        "casename, scenario, parmater, expect, apiid,name,url,method,projectname",
+        "from testcase,apinfor",
+        "where testcase.id = #{id,jdbcType=VARCHAR}",
+        "and testcase.apiid = apinfor.id"
     })
     @Results({
         @Result(column="id", property="id", jdbcType=JdbcType.VARCHAR, id=true),
@@ -109,9 +110,13 @@ public interface TestcaseMapper {
         @Result(column="scenario", property="scenario", jdbcType=JdbcType.VARCHAR),
         @Result(column="parmater", property="parmater", jdbcType=JdbcType.VARCHAR),
         @Result(column="expect", property="expect", jdbcType=JdbcType.VARCHAR),
-        @Result(column="apiid", property="apiid", jdbcType=JdbcType.VARCHAR)
+        @Result(column="apiid", property="apiid", jdbcType=JdbcType.VARCHAR),
+        @Result(column="url", property="url", jdbcType=JdbcType.VARCHAR),
+        @Result(column="method", property="method", jdbcType=JdbcType.VARCHAR),
+        @Result(column="projectname", property="projectname", jdbcType=JdbcType.VARCHAR),
+        @Result(column="projectname", property="projectname", jdbcType=JdbcType.VARCHAR)
     })
-    Testcase selectByPrimaryKey(String id);
+    CaseVo selectByPrimaryKey(String id);
     
     @Select({
     	"select *",

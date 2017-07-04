@@ -38,7 +38,7 @@ public class CaseServiceImpl implements CaseService {
 		return caseDao.deleteByPrimaryKey(id);
 	}
 	@Override
-	public Testcase selectByPrimaryKey(String id) {
+	public CaseVo selectByPrimaryKey(String id) {
 		
 		return caseDao.selectByPrimaryKey(id);
 	}
@@ -118,11 +118,12 @@ public class CaseServiceImpl implements CaseService {
 		return caseDao.updateByPrimaryKey(record);
 	}
 	@Override
-	public Boolean execase() {
+	public Boolean execase(String filepath) {
 		TestNG testng = new TestNG();
+		
 		//testng.setTestJar(jarPath);
 		List suites = new ArrayList();
-		suites.add("D:\\win\\testng.xml");//path to xml..
+		suites.add(filepath);//path to xml..
 		testng.setTestSuites(suites);
 	//	testng.addListener(new TestListenerAdapter());
 		testng.run();

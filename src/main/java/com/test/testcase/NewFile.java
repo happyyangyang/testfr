@@ -36,6 +36,7 @@ public class NewFile {
 				  
 		  String fileName = System.getProperty("user.dir")//获取到项目的根路径
 				    + "//src//main//java//com//test//testcase//MyTestCase.java";
+		  System.out.println("wwwwwwwwwwwwwwwwwwwwwwwww:"+fileName);
 				  File f = new File(fileName);
 				  FileWriter fw = new FileWriter(f);
 				  fw.write(testngfile);
