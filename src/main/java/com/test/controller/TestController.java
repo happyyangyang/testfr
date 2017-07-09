@@ -2,6 +2,8 @@ package com.test.controller;
 
 import java.io.File;
 import java.io.FileFilter;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -17,12 +19,22 @@ import javax.tools.JavaCompiler.CompilationTask;
 import javax.tools.StandardJavaFileManager;
 import javax.tools.ToolProvider;
 
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.testng.Assert;
 import org.testng.TestNG;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.test.model.Apinfor;
 import com.test.model.Testcase;
 import com.test.model.User;
@@ -168,7 +180,7 @@ public class TestController {
 			@RequestMapping("/updatecase")
 			public String updatecase(String id,HttpServletRequest request){
 				//CaseVo casevo = caseService.selectByid(id);
-				Testcase testcase = caseService.selectByPrimaryKey(id);
+				Testcase testcase = caseService.selectid(id);
 				//前端也value=“S{Attributename.属性}”
 				request.setAttribute("testcase", testcase);
 				
@@ -186,63 +198,170 @@ public class TestController {
 				String srcdir=request.getSession().getServletContext().getRealPath("/WEB-INF/classes");
 				//获得testng包
 				String jarpath1 = request.getSession().getServletContext().getRealPath("/WEB-INF/lib/testng-6.9.10.jar");
+				//发送http请求的jar包
 				String jarpath2 = request.getSession().getServletContext().getRealPath("/WEB-INF/lib/yhq.jar");
-				String jarpath = jarpath1+";"+jarpath2;
+				//解析json的jar包
+				String jarpath3 = request.getSession().getServletContext().getRealPath("/WEB-INF/lib/fastjson-1.2.8.jar");
+				//获取运行环境的操作系统
+				String os = System.getProperty("os.name");  
+				System.out.println(os);
+				String jarpath;
+				if(os.contains("Windows")){
+					jarpath = jarpath1+";"+jarpath2+";"+jarpath3;
+				}else{
+					jarpath = jarpath1+":"+jarpath2+":"+jarpath3;
+				}
+			
 						
 				System.out.println("webinf的路径："+syhq);
 				Map<String,String> map = new HashMap<String,String>();
 				
 				User loginUser = (User)request.getSession().getAttribute("loginUser");
 				if(loginUser!=null){
-					Boolean flag = false;
-					List<CaseVo> cases = new ArrayList<CaseVo>();
-					for(int i=0;i<parm.size();i++){
-						CaseVo testcase = caseService.selectByPrimaryKey(parm.get(i)) ;
-						cases.add(testcase);
-					}
+					try{
+						Boolean flag = false;
+						List<CaseVo> cases = new ArrayList<CaseVo>();
+						for(int i=0;i<parm.size();i++){
+							CaseVo testcase = caseService.selectByPrimaryKey(parm.get(i)) ;
+							cases.add(testcase);
+						}
 
-					
-					String rt = "\r\n";
-					String tab ="\t";
-					  
-					  
-					  StringBuilder method = new StringBuilder();
-					  for(int i=0;i<cases.size();i++){
-						  String s = "@Test"+rt+"public void " + cases.get(i).getCasename()+"()" +"{"+rt+tab+
-								  "httpurl = new MyHttpUrlConnect();"+rt+tab+" String res = httpurl.postrawBody(\""
-								  		+ ""+cases.get(i).getUrl()+"\","+"\""+
-								  cases.get(i).getParmater()+"\""+");"+rt+tab
-								  + "  System.out.println(res);"+ rt
-								   + " }"+rt;
-						method.append(s);	  
-					  }
-					  String imp ="import org.testng.annotations.Test;"+rt+"import com.test.util.MyHttpUrlConnect;";
-					  //"package com.test.testcase;"
-					  String source =  "package com.test.testcase;"+ rt+imp+rt
-							    + "public class MyTest"+ rt  + "{" + rt + "MyHttpUrlConnect httpurl = null;"+rt+
-							    method + rt+
-							    "}";
-					  
-					  ExeTestCase ec = new ExeTestCase();
-					  //String  s =ExeTestCase.class.getClassLoader().getResource("MyTest.java").getPath();
-					  ec.execase(syhq,source,srcdir,jarpath);
+						
+						String rt = "\r\n";
+						String tab ="\t";
+						  
+						  
+						  StringBuilder method = new StringBuilder();
+						  for(int i=0;i<cases.size();i++){
+							  String s = "@Test"+rt+"public void " + cases.get(i).getCasename()+"()" +"{"+rt+tab+
+									  "httpurl = new MyHttpUrlConnect();"+rt+tab+" String res = httpurl.postrawBody(\""
+									  		+ ""+cases.get(i).getUrl()+"\","+"\""+
+									  cases.get(i).getParmater()+"\""+");"+rt+tab
+									  + " JSONObject json = JSON.parseObject(res);"+ rt+tab+"System.out.println(res);"+rt+tab+
+									  "String s = json.getString(res);"+rt+tab+"Assert.assertEquals(s, 0);"
+									   + " }"+rt;
+							method.append(s);	  
+						  }
+						  String imp ="import org.testng.annotations.Test;"+rt+"import com.test.util.MyHttpUrlConnect;"+rt+"import org.testng.Assert;"
+								  		+"import com.alibaba.fastjson.*;";
+						  //"package com.test.testcase;"
+						  String source =  "package com.test.testcase;"+ rt+imp+rt
+								    + "public class MyTest"+ rt  + "{" + rt + "MyHttpUrlConnect httpurl = null;"+rt+
+								    method + rt+
+								    "}";
+						  
+						  ExeTestCase ec = new ExeTestCase();
+						  //String  s =ExeTestCase.class.getClassLoader().getResource("MyTest.java").getPath();
+						  ec.execase(syhq,source,srcdir,jarpath);
+						  map.put("result", "success");
+					}
+					catch(Exception e){
+						
+						map.put("result", "error");
+					}
 				}
 			return map;
 						
 			}  
-			
+			//执行批量文件
 			@RequestMapping("/exebatchcase")
 			@ResponseBody
 			public Map<String,String> exebatchcase(HttpServletRequest request){
 				Map<String,String> map = new HashMap<String,String>();
 				//String path = request.getSession().getServletContext().getRealPath("com.test.testcase");
 				User loginUser = (User)request.getSession().getAttribute("loginUser");
-				String path = "D:\\win\\testng.xml";
+				//testng.xml的路径
+				String path = request.getSession().getServletContext().getRealPath("/WEB-INF/classes/testng.xml");
 				if(loginUser!=null){
+					
 					Boolean flag = caseService.execase(path);
+					if(flag){
+						map.put("result", "success"); 
+					}else{
+						map.put("result", "error");
+					}
 				}
 				return map;
 						
 			}  
-
+			
+			//批量导入用例
+			@RequestMapping("/importexcel")
+			public String importexcel(HttpServletRequest request,@RequestParam MultipartFile file){
+				Map<String,String> map = new HashMap<String,String>();
+				//String path = request.getSession().getServletContext().getRealPath("com.test.testcase");
+				User loginUser = (User)request.getSession().getAttribute("loginUser");
+				//上传到服务的路径
+				String path = request.getSession().getServletContext().getRealPath("upload");
+				if(loginUser!=null){
+					try{
+						String url = path+"/"+System.currentTimeMillis()+file.getOriginalFilename();
+						System.out.println("上传到服务器的路径："+url);
+						file.transferTo(new File(url));
+						//读取excel并打入数据库
+						start(url);
+						
+						
+						
+					}catch(Exception e){
+						
+						e.printStackTrace();
+					}
+				}
+				return "testcaselist";
+						
+			}  
+			
+			//读取excel并入库
+			public void start(String excelurl){
+				Map<String,String> map = new HashMap<String,String>();
+				try {
+					XSSFWorkbook workbook = new XSSFWorkbook(new FileInputStream(new File(excelurl)));
+					XSSFSheet sheet = workbook.getSheetAt(0);
+					//获取总行数
+					int rowtotal = sheet.getLastRowNum()-sheet.getFirstRowNum()+1;
+					String [][] result = new String[rowtotal][]; 
+					//标题不能算入
+					for(int rowindex=1;rowindex<=sheet.getLastRowNum();rowindex++){
+						XSSFRow row = sheet.getRow(rowindex);
+						//获取总列数
+						int celltotal = row.getLastCellNum()+1;
+						String [] str = new String[celltotal];
+						//读取列
+						for(int colindex=0;colindex<row.getLastCellNum();colindex++){
+							XSSFCell cell = row.getCell(colindex);
+							result[rowindex] = str;
+							result[rowindex][colindex] = cell.getStringCellValue();
+							
+						}
+					}
+					
+					//入库
+					
+					for(int i=1;i<result.length;i++){
+						int cellnum = result[i].length;
+						List<String>list = new ArrayList<String>();
+						Testcase testcase = new Testcase();
+						//表格列的位置固定
+						for(int j=0;j<cellnum;j++){
+							list.add(result[i][j]);
+						}
+						testcase.setCasename(list.get(0));
+						testcase.setScenario(list.get(1));
+						testcase.setParmater(list.get(2));
+						testcase.setExpect(list.get(3));
+						testcase.setApiid(list.get(4));
+						caseService.insert(testcase);
+						
+					}
+					
+				} catch (FileNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			
 }

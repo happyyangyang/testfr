@@ -99,8 +99,19 @@
 		 	alert("请选择一行");
 		 }
 		 
-	} )
-	  //工具栏的删除
+	} );
+	
+	// 批量导入
+	
+	$("#btn_excel").click(
+		function(){
+		 location.href='${appctx}/jsp/upload.jsp';
+			});
+	 
+	
+	
+	
+		  //工具栏的删除
 	 $("#btn_delete").click(function(){
 		 var a= $('#tb_departments').bootstrapTable('getSelections'); 
 		 var arr = new Array();
@@ -251,7 +262,7 @@
 	 <button id="btn_delete" type="button" class="btn btn-default" onclick="wf.resource_delete();">
 	 <span class="glyphicon glyphicon-remove" ></span>删除
 	 </button>
-	 <button id="btn_excel" type="button" class="btn btn-default" onclick="wf.resource_delete();">
+	 <button id="btn_excel" type="button" class="btn btn-default" >
 	 <span class="glyphicon glyphicon-remove" ></span>批量导入
 	 </button>
 	 </div>

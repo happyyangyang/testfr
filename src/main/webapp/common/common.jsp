@@ -29,6 +29,8 @@
 
 <!-- jQuery -->
 <script src="${ctx}/bower_components/jquery/jquery.min.js"></script>
+<script src="${ctx}/BootstrapTable/bootstrap-table-export.js"></script>
+<script src="${ctx}/BootstrapTable/tableExport.js"></script>
 
 <script src="${ctx}/js/bootstrap-table.js"></script>
 <script src="${ctx}/js/bootstrap-table-zh-CN.min.js"></script>

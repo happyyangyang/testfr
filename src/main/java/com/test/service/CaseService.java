@@ -17,7 +17,7 @@ public interface CaseService {
 	int deleteByPrimaryKeybatch(List<String>list);
 	
 	CaseVo selectByPrimaryKey(String id);
-	
+	Testcase selectid(String id);
 	int insert(Testcase record);
 	
 	int updateByPrimaryKeySelective(Testcase record);

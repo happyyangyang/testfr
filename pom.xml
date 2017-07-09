@@ -1,45 +1,51 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>com.yhq</groupId>
-  <artifactId>autotest</artifactId>
-  <packaging>war</packaging>
-  <version>0.0.1-SNAPSHOT</version>
-  <name>autotest Maven Webapp</name>
-  <url>http://maven.apache.org</url>
-   <properties>  
-        <spring.group>org.springframework</spring.group>  
-        <spring.version>4.0.1.RELEASE</spring.version>  
-    </properties> 
-  <dependencies>
-    <dependency>
-	      <groupId>org.testng</groupId>
-	      <artifactId>testng</artifactId>
-	      <version>6.9.10</version>
-	      <scope>test</scope>
-    </dependency>
-     <dependency>
-	    <groupId>com.beust</groupId>
-	    <artifactId>jcommander</artifactId>
-	    <version>1.27</version>
-    </dependency>
-    <dependency>
-    <groupId>org.beanshell</groupId>
-    <artifactId>bsh</artifactId>
-    <version>2.0b4</version>
-	</dependency>
-	<dependency>
-	    <groupId>com.google.guava</groupId>
-	    <artifactId>guava</artifactId>
-	    <version>19.0</version>
-	</dependency>
-    <!-- jts标签 -->
-    <dependency>
-		    <groupId>javax.servlet</groupId>
-		    <artifactId>jstl</artifactId>
-		    <version>1.2</version>
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.yhq</groupId>
+	<artifactId>autotest</artifactId>
+	<packaging>war</packaging>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>autotest Maven Webapp</name>
+	<url>http://maven.apache.org</url>
+	<properties>
+		<spring.group>org.springframework</spring.group>
+		<spring.version>4.0.1.RELEASE</spring.version>
+	</properties>
+	<dependencies>
+		<dependency>
+			<groupId>org.testng</groupId>
+			<artifactId>testng</artifactId>
+			<version>6.9.10</version>
+
 		</dependency>
-    <!-- springmvc依赖包 -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<version>3.0</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.beust</groupId>
+			<artifactId>jcommander</artifactId>
+			<version>1.27</version>
+		</dependency>
+		<dependency>
+			<groupId>org.beanshell</groupId>
+			<artifactId>bsh</artifactId>
+			<version>2.0b4</version>
+		</dependency>
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>19.0</version>
+		</dependency>
+		<!-- jts标签 -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jstl</artifactId>
+			<version>1.2</version>
+		</dependency>
+		<!-- springmvc依赖包 -->
 		<dependency>
 			<groupId>${spring.group}</groupId>
 			<artifactId>spring-webmvc</artifactId>
@@ -50,15 +56,20 @@
 			<artifactId>jackson-mapper-asl</artifactId>
 			<version>1.9.13</version>
 		</dependency>
-		<dependency>  
-            <groupId>com.fasterxml.jackson.core</groupId>  
-            <artifactId>jackson-databind</artifactId>  
-            <version>2.3.1</version>  
-        </dependency>  
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>2.3.1</version>
+		</dependency>
 		<dependency>
 			<groupId>commons-fileupload</groupId>
 			<artifactId>commons-fileupload</artifactId>
 			<version>1.2.2</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.4</version>
 		</dependency>
 
 		<!-- spring依赖包 -->
@@ -86,9 +97,9 @@
 			<version>1.1.1</version>
 		</dependency>
 		<dependency>
-		    <groupId>com.github.pagehelper</groupId>
-		    <artifactId>pagehelper</artifactId>
-		    <version>4.0.3</version>
+			<groupId>com.github.pagehelper</groupId>
+			<artifactId>pagehelper</artifactId>
+			<version>4.0.3</version>
 		</dependency>
 		<!-- mysql的驱动包 -->
 		<dependency>
@@ -116,9 +127,9 @@
 		</dependency>
 		<!-- poi excel处理 -->
 		<dependency>
-		    <groupId>org.apache.poi</groupId>
-		    <artifactId>poi</artifactId>
-		    <version>3.12</version>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-ooxml</artifactId>
+			<version>3.9</version>
 		</dependency>
 		<!-- httpclient -->
 		<dependency>
@@ -132,18 +143,18 @@
 			<artifactId>commons-lang</artifactId>
 			<version>2.3</version>
 		</dependency>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>3.8.1</version>
-      <scope>test</scope>
-    </dependency>
-    
-    
-  </dependencies>
-  <build>
-    <finalName>autotest</finalName>
-     <plugins>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>3.8.1</version>
+			<scope>test</scope>
+		</dependency>
+
+
+	</dependencies>
+	<build>
+		<finalName>autotest</finalName>
+		<plugins>
 			<!-- 定义maven编译jdk的版本，默认是1.5，版本太低 -->
 			<!-- define the project compile level -->
 			<plugin>
@@ -155,10 +166,10 @@
 					<target>1.7</target>
 					<encoding>UTF-8</encoding>
 					<compilerArguments>
-                   <extdirs>${basedir}/src/main/webapp/WEB-INF/lib</extdirs>
-               </compilerArguments>
+						<extdirs>${basedir}/src/main/webapp/WEB-INF/lib</extdirs>
+					</compilerArguments>
 				</configuration>
 			</plugin>
 		</plugins>
-  </build>
+	</build>
 </project>

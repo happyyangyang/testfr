@@ -9,6 +9,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.testng.TestNG;
+import org.testng.reporters.SuiteHTMLReporter;
+import org.testng.xml.XmlSuite;
 
 import com.test.dao.TestcaseMapper;
 
@@ -119,15 +121,31 @@ public class CaseServiceImpl implements CaseService {
 	}
 	@Override
 	public Boolean execase(String filepath) {
-		TestNG testng = new TestNG();
+		Boolean flag = false;
+		try{
+			TestNG testng = new TestNG();
+			
+			//testng.setTestJar(jarPath);
+			List suites = new ArrayList();
+			suites.add(filepath);//path to xml..
+			testng.setTestSuites(suites);
+		//	testng.addListener(new TestListenerAdapter());
+			testng.run();
+			flag = true;
+			//生成报告
+			//SuiteHTMLReporter report = new SuiteHTMLReporter();
+			//report.generateReport(xmlSuites, suites, testng.getOutputDirectory());
+			
+		}catch(Exception e){
+			System.out.println("执行用例中发生错误");
+		}
 		
-		//testng.setTestJar(jarPath);
-		List suites = new ArrayList();
-		suites.add(filepath);//path to xml..
-		testng.setTestSuites(suites);
-	//	testng.addListener(new TestListenerAdapter());
-		testng.run();
-		return null;
+		return flag;
+	}
+	@Override
+	public Testcase selectid(String id) {
+		// TODO Auto-generated method stub
+		return caseDao.selectid(id);
 	}
 
 }
