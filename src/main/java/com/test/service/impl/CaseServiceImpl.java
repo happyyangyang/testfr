@@ -5,9 +5,11 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.testng.IReporter;
 import org.testng.TestNG;
 import org.testng.reporters.SuiteHTMLReporter;
 import org.testng.xml.XmlSuite;
@@ -62,53 +64,7 @@ public class CaseServiceImpl implements CaseService {
 		}
 		return total ;
 	}
-	//批量生成testng类
-	@Override
-	public Boolean getbatchexe(List<String> list) {
-		Boolean flag = false;
-		List<Testcase> cases = new ArrayList<Testcase>();
-		for(int i=0;i<list.size();i++){
-			Testcase testcase = caseDao.selectByPrimaryKey(list.get(i)) ;
-			cases.add(testcase);
-		}
-		String rt = "\r\n";
-		String tab ="\t";
-		  
-		  
-		  StringBuilder method = new StringBuilder();
-		  for(int i=0;i<cases.size();i++){
-			  String s = "public void " + cases.get(i).getCasename()+"()" +"{"+rt
-					  + "  System.out.println(\"price markup....\");"+ rt
-					    + "  s.sell();" + " }";
-			method.append(s);	  
-		  }
-		  String source = "package com.test.testcase;" + ""+ rt
-				    + "public class MyTestCase"+ rt  + "{"+ rt  + "private String s;" + rt +
-				    "public MyTestCase(String s)"+ rt  + " {" + "  this.s = s;"+ rt
-				    + " }" + rt +
-
-				   method + rt+
-				    "}";
-		  String fileName = "classpath://com//test//testcase//MyTest.java";
-				  File f = new File(fileName);
-				  FileWriter fw=null;
-				try {
-					fw = new FileWriter(f);
-					 fw.write(source);
-					 fw.flush();
-					 fw.close();
-				} catch (IOException e) {
-					
-					e.printStackTrace();
-				}finally{
-					
-					  
-					  
-				}
-				
-		  
-		return null;
-	}
+	
 	@Override
 	public CaseVo selectByid(String id) {
 	
@@ -121,20 +77,16 @@ public class CaseServiceImpl implements CaseService {
 	}
 	@Override
 	public Boolean execase(String filepath) {
+		
 		Boolean flag = false;
 		try{
 			TestNG testng = new TestNG();
-			
-			//testng.setTestJar(jarPath);
 			List suites = new ArrayList();
 			suites.add(filepath);//path to xml..
 			testng.setTestSuites(suites);
 		//	testng.addListener(new TestListenerAdapter());
 			testng.run();
 			flag = true;
-			//生成报告
-			//SuiteHTMLReporter report = new SuiteHTMLReporter();
-			//report.generateReport(xmlSuites, suites, testng.getOutputDirectory());
 			
 		}catch(Exception e){
 			System.out.println("执行用例中发生错误");
@@ -147,5 +99,11 @@ public class CaseServiceImpl implements CaseService {
 		// TODO Auto-generated method stub
 		return caseDao.selectid(id);
 	}
-
+	@Override
+	public Boolean getbatchexe(List<String> list) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	
 }

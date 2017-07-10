@@ -108,6 +108,7 @@
 									<li><a class="ajax-link"  target='main_target' href="${appctx}/jsp/apilist.jsp"><i class="glyphicon glyphicon-align-justify"></i><span>Http接口</span></a></li>
 									<li><a class="ajax-link"  target='main_target' href="${appctx}/jsp/testcaselist.jsp"><i class="glyphicon glyphicon-calendar"></i><span>测试用例</span></a></li>
 									<li><a class="ajax-link"  target='main_target' href="${appctx}/jsp/testcaseexecute.jsp"><i class="glyphicon glyphicon-th"></i><span>用例执行</span></a></li>
+									<li><a class="ajax-link"  target='main_target' href="${appctx}/jsp/history.jsp"><i class="glyphicon glyphicon-th"></i><span>测试运行记录</span></a></li>
 								</ul>
 							</li>
 							<li class="accordion"><a href="#"><i class="glyphicon glyphicon-plus"></i><span>权限管理</span></a>
