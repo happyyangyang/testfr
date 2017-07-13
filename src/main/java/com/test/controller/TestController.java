@@ -95,7 +95,7 @@ public class TestController {
 				testcase.setCasename(parm.get("casename"));
 				testcase.setScenario(parm.get("scenario"));
 				testcase.setParmater(parm.get("parmater"));
-				testcase.setExpect(parm.get("expect"));
+				testcase.setExpectkey1(parm.get("expect"));
 				testcase.setApiid(parm.get("apiid"));
 				Map<String,String> map = new HashMap<String,String>();
 				User loginUser = (User)request.getSession().getAttribute("loginUser");
@@ -160,7 +160,7 @@ public class TestController {
 				testcase.setCasename(parm.get("casename"));
 				testcase.setScenario(parm.get("scenario"));
 				testcase.setParmater(parm.get("parmater"));
-				testcase.setExpect(parm.get("expect"));
+				testcase.setExpectkey1(parm.get("expect"));
 				testcase.setApiid(parm.get("apiid"));
 				Map<String,String> map = new HashMap<String,String>();
 				User loginUser = (User)request.getSession().getAttribute("loginUser");
@@ -234,11 +234,11 @@ public class TestController {
 						  StringBuilder method = new StringBuilder();
 						  for(int i=0;i<cases.size();i++){
 							  String s = "@Test"+rt+"public void " + cases.get(i).getCasename()+"()" +"{"+rt+tab+
-									  "httpurl = new MyHttpUrlConnect();"+rt+tab+" String res = httpurl.postrawBody(\""
+									  "httpurl = new MyHttpUrlConnect();"+rt+tab+" String respose = httpurl.postrawBody(\""
 									  		+ ""+cases.get(i).getUrl()+"\","+"\""+
 									  cases.get(i).getParmater()+"\""+");"+rt+tab
-									  + " JSONObject json = JSON.parseObject(res);"+ rt+tab+"System.out.println(res);"+rt+tab+
-									  "String s = json.getString(res);"+rt+tab+"Assert.assertEquals(s, 0);"
+									  + " JSONObject json = JSON.parseObject(respose);"+ rt+tab+"System.out.println(respose);"+rt+tab+
+									  "String s = json.getString(\""+cases.get(i).getExpectkey1()+"\");"+rt+tab+"Assert.assertEquals(s,"+"\""+cases.get(i).getExpectvalue1()+"\""+");"
 									   + " }"+rt;
 							method.append(s);	  
 						  }
@@ -252,6 +252,7 @@ public class TestController {
 						  
 						  ExeTestCase ec = new ExeTestCase();
 						  //String  s =ExeTestCase.class.getClassLoader().getResource("MyTest.java").getPath();
+						  //编译
 						  ec.execase(syhq,source,srcdir,jarpath);
 						  map.put("result", "success");
 					}
@@ -349,7 +350,7 @@ public class TestController {
 						testcase.setCasename(list.get(0));
 						testcase.setScenario(list.get(1));
 						testcase.setParmater(list.get(2));
-						testcase.setExpect(list.get(3));
+						testcase.setExpectkey1(list.get(3));
 						testcase.setApiid(list.get(4));
 						caseService.insert(testcase);
 						

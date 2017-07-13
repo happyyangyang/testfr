@@ -2,14 +2,14 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 <suite name="Suite1">
 <suite-files >
-	<!--  <suite-file path="testng2.xml"></suite-file>-->
+	<suite-file path=""></suite-file>
 </suite-files>
  <listeners >
  	 <listener class-name="com.test.util.ExtentTestNGIReporterListener"></listener>  
  </listeners>
   <test name="Test">
     <classes>
-      <class name="com.test.testcase.MyTest"/>
+      <class name="com.test.testcase.MyTestCase"/>
     </classes>
   </test>
 </suite>

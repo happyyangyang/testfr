@@ -3,7 +3,9 @@ package com.test.service.impl;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -14,11 +16,13 @@ import org.testng.TestNG;
 import org.testng.reporters.SuiteHTMLReporter;
 import org.testng.xml.XmlSuite;
 
+import com.test.dao.ReporterMapper;
 import com.test.dao.TestcaseMapper;
-
+import com.test.model.Reporter;
 import com.test.model.Testcase;
 import com.test.service.CaseService;
 import com.test.util.IdGenerateUtils;
+import com.test.util.ReportResult;
 import com.test.vo.CaseVo;
 
 @Service("CaseService") 
@@ -26,6 +30,10 @@ public class CaseServiceImpl implements CaseService {
 	
 	@Autowired
     private TestcaseMapper caseDao;
+	
+	@Autowired
+    private ReporterMapper reporterDao;
+	
 	@Override
 	public List<Testcase> getlist() {
 		
@@ -87,6 +95,20 @@ public class CaseServiceImpl implements CaseService {
 		//	testng.addListener(new TestListenerAdapter());
 			testng.run();
 			flag = true;
+			Reporter  record = new Reporter();
+			record.setId(IdGenerateUtils.getId());
+			record.setTotalcount(ReportResult.testCount);
+			record.setFailurescount(ReportResult.failures);
+			record.setTotaltime(String.valueOf(ReportResult.totalTime));
+			record.setErrorcount(ReportResult.errors);
+			Date d = new Date(ReportResult.begantime);
+			record.setExcdate(d);
+			record.setSuccesscount(ReportResult.testCount-ReportResult.failures-ReportResult.errors);
+			record.setSkipscount(ReportResult.testCount-ReportResult.failures-ReportResult.errors-record.getSuccesscount());
+			//double percent = record.getSuccesscount()/record.getTotalcount()*100.0;
+			double success = record.getSuccesscount().doubleValue();
+			record.setSuccesspercent(success/record.getTotalcount());
+			reporterDao.insert(record);
 			
 		}catch(Exception e){
 			System.out.println("执行用例中发生错误");

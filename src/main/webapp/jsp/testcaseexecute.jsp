@@ -165,8 +165,17 @@
 	 title: '参数',
 	 width: 10
 	 },{
-	 field: 'expect',
-     title: '期望结果'
+	 field: 'expectkey1',
+     title: '断言字段一'
+	 },{
+	 field: 'expectvalue1',
+     title: '断言字段一的值'
+	 },{
+	 field: 'expectkey2',
+     title: '断言字段二'
+	 },{
+	 field: 'expectvalue2',
+     title: '断言字段二的值'
 	 },{
 		 field: 'operate',
 		 title: '操作',
