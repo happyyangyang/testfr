@@ -89,12 +89,12 @@
 						<div class="btn-toolbar">
 							<div class="pull-left"><br><br><br>
 								<div class="input-append">
-								项目：<input type="text" placeholder="项目名" id="projectname" name="projectname" value="${apinfor.projectname}" style="width: 270px; height: 43px"/>
-								接口名称：<input type="text" placeholder="接口名称" id="name" name="name" value="${apinfor.name}" style="width: 235px;height: 43px "/>	
+								*项目：<input type="text" placeholder="项目名" id="projectname" name="projectname" value="${apinfor.projectname}" style="width: 270px; height: 43px"/>
+								*接口名称：<input type="text" placeholder="接口名称" id="name" name="name" value="${apinfor.name}" style="width: 235px;height: 43px "/>	
 								</div><br><br><br>
 								<div class="input-append">
-								接口地址：<input type="text" placeholder="接口地址" id="url"  name="url" value="${apinfor.url}"style="width: 568px; height: 43px"/>
-								请求方法：<input type="text" placeholder="请求方法" id="method"  name="apinfor.method" value="${apinfor.method}" style="height: 43px; "/>	
+								*接口地址：<input type="text" placeholder="接口地址" id="url"  name="url" value="${apinfor.url}"style="width: 568px; height: 43px"/>
+								*请求方法：<input type="text" placeholder="请求方法" id="method"  name="apinfor.method" value="${apinfor.method}" style="height: 43px; "/>	
 								</div><br><br><br>
 								<input  type="hidden"  id="id" value="${apinfor.id}">
 								<p class="center col-md-5">

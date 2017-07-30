@@ -53,6 +53,29 @@ public class LoginController {
 		 }
 		 
 	 }  
+	 
+	 //toapilist.do
+	 @RequestMapping("/toapilist")
+	 public String toapilist(HttpServletRequest request){ 
+		 return "apilist";
+		 
+	 }  
+	 @RequestMapping("/totestcaselist")
+	 public String totestcaselist(HttpServletRequest request){ 
+		 return "testcaselist";
+		 
+	 }
+	 @RequestMapping("/totestcaseexecute")
+	 public String totestcaseexecute(HttpServletRequest request){ 
+		 return "testcaseexecute";
+		 
+	 }
+	 @RequestMapping("/tohistory")
+	 public String tohistory(HttpServletRequest request){ 
+		 return "history";
+		 
+	 }
+	 
 	 //参数绑定，简单类型保证jsp中name和controller的形参一直就可以，如果不可以可以用@RequestParam来指定
 	 
 	 @RequestMapping("/sucessparm")

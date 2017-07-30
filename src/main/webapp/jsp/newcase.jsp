@@ -20,7 +20,7 @@ $(function(){
 	function Apiinfors(){
 	$.ajax({
 		type : "post",
-		url : "${appctx}/interface/getlist.do",
+		url : "${appctx}/interface/getapiname.do",
 		dataType : "json",
 		data : {
 			//merserialno : $("#merserialno").val()
@@ -61,15 +61,24 @@ function selectUpdate() {
    			alert("请输入场景");
    		}else if($("#parmater").val()==null||(!$("#parmater").val().length>0)){
    			alert("请输入参数");
-   		}else if($("#expect").val()==null||(!$("#expect").val().length>0)){
-   			alert("请输入期望结果");
-   		}else{
+   		}else if($("#expectkey1").val()==null||(!$("#expectkey1").val().length>0)){
+   			alert("请输入断言字段一");
+   		}else if($("#expectvalue1").val()==null||(!$("#expectvalue1").val().length>0)){
+   			alert("请输入断言字段一的值");
+   		}else if($("#expectkey2").val()==null||(!$("#expectkey2").val().length>0)){
+   			alert("请输入断言字段二");
+   		}else if($("#expectvalue2").val()==null||(!$("#expectvalue2").val().length>0)){
+   			alert("请输入断言字段二的值");
+   		}else if($("#apiname").val()=='请选择'){
+   			alert("请选择接口");
+   		}
+   		else{
    			$.ajax({
    		        url: '${appctx}/testCase/newtestcase.do',
    		        async: true,
    		        contentType:"application/json",
    		        type: 'POST',
-   		        data: JSON.stringify({apiid:$("#apiname").val(),casename:$("#casename").val(),scenario:$("#scenario").val(),parmater:$("#parmater").val(),expect:$("#expect").val()}),
+   		        data: JSON.stringify({apiid:$("#apiname").val(),casename:$("#casename").val(),scenario:$("#scenario").val(),parmater:$("#parmater").val(),expectkey1:$("#expectkey1").val(),expectvalue1:$("#expectvalue1").val(),expectkey2:$("#expectkey2").val(),expectvalue2:$("#expectvalue2").val()}),
    		        success: function(data , textStatus){
    		        	
    			          if(data.result=="success"){
@@ -116,15 +125,18 @@ function selectUpdate() {
 						<div class="btn-toolbar">
 							<div class="pull-left"><br><br><br>
 								<div class="input-append">
-								用例名：<input type="text" placeholder="用例名" id="casename" name="casename" style="width: 270px; height: 43px"/>
-								场景：<input type="text" placeholder="场景" id="scenario" name="scenario" style="width: 235px;height: 43px "/>	
+								*用例名：<input type="text" placeholder="用例名" id="casename" name="casename" style="width: 270px; height: 43px"/>
+								*场景：<input type="text" placeholder="场景" id="scenario" name="scenario" style="width: 235px;height: 43px "/>	
 								</div><br><br><br>
 								<div class="input-append">
-								参数：<textarea rows="10" cols="60" placeholder="参数" id="parmater"></textarea> 
-								期望结果：<input type="text" placeholder="期望结果" id="expect"  name="expect" style="height: 43px; "/>	
+								*参数：<textarea rows="10" cols="60" id="parmater" ></textarea> <br>
+								*断言字段一：<input type="text" placeholder="断言字段一" id="expectkey1"   name="expect" style="height: 43px; "/>	
+								*断言字段一的值：<input type="text" placeholder="断言字段一的值" id="expectvalue1"   name="expect" style="height: 43px; "/>	<br>
+								*断言字段二：<input type="text" placeholder="断言字段二" id="expectkey2"  name="expect" style="height: 43px; "/>	
+								*断言字段二的值：<input type="text" placeholder="断言字段二的值" id="expectvalue2"   name="expect" style="height: 43px; "/>
 								</div><br><br><br>
 								
-								接口名：<div data-container="bbb" id="receiveBusiDivision" style="width: 905px; "></div><br><br><br>
+								*接口名：<div data-container="bbb" id="receiveBusiDivision" style="width: 905px; "></div><br><br><br>
 								
 								<p class="center col-md-5">
                     				<button type="button" class="btn btn-primary" onclick="registerFunction()">提交</button>

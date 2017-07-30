@@ -6,4 +6,21 @@
       <class name="com.test.testcase.MyTest"/>
     </classes>
   </test> <!-- Default test -->
+  <test name="Default test(failed)">
+    <classes>
+      <class name="com.test.testcase.MyTest">
+        <methods>
+          <include name="search006"/>
+          <include name="search005"/>
+          <include name="search007"/>
+          <include name="detail001"/>
+          <include name="search0010"/>
+          <include name="detail01"/>
+          <include name="search003"/>
+          <include name="search009"/>
+          <include name="search0011"/>
+        </methods>
+      </class> <!-- com.test.testcase.MyTest -->
+    </classes>
+  </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->

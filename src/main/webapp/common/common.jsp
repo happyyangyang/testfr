@@ -5,6 +5,7 @@
 <c:set var="appctx" value="${pageContext.request.contextPath}"></c:set>
 
 <!-- The styles -->
+<link rel="stylesheet" href="${ctx}/datetimepicker/bootstrap-datetimepicker.min.css" type="text/css">
 <link rel="stylesheet" href="${ctx}/bower_components/zTree/css/demo.css" type="text/css">
 <link rel="stylesheet" href="${ctx}/css/bootstrap.css" type="text/css">
 <link rel="stylesheet" href="${ctx}/css/bootstrap-table.css" type="text/css">
@@ -27,10 +28,16 @@
 <link href='${ctx}/css/mycss.css' rel='stylesheet'>
 
 
-<!-- jQuery -->
+<!-- jQuery
+<script src="${ctx}/datetimepicker/moment-with-locales.min.js"></script>
+<script src="${ctx}/datetimepicker/moment.js"></script> -->
 <script src="${ctx}/bower_components/jquery/jquery.min.js"></script>
 <script src="${ctx}/BootstrapTable/bootstrap-table-export.js"></script>
-<script src="${ctx}/BootstrapTable/tableExport.js"></script>
+<script src="${ctx}/datetimepicker/bootstrap-datepicker.js"></script>
+<script src="${ctx}/datetimepicker/bootstrap-datepicker.zh-CN.js"></script>
+<script src="${ctx}/datetimepicker/bootstrap-datepicker.fr.min.js"></script>
+
+
 
 <script src="${ctx}/js/bootstrap-table.js"></script>
 <script src="${ctx}/js/bootstrap-table-zh-CN.min.js"></script>
@@ -73,4 +80,4 @@
 <script src="${ctx}/js/charisma.js"></script>
 <script type="text/javascript" src="${ctx}/bower_components/zTree/js/jquery.ztree.core.js"></script>
 <script type="text/javascript" src="${ctx}/bower_components/zTree/js/jquery.ztree.excheck.js"></script>
-<script type="text/javascript" src="${ctx}/bower_components/My97DatePicker/WdatePicker.js"></script>
+

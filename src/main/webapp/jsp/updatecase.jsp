@@ -20,7 +20,7 @@ $(function(){
 	function Apiinfors(){
 	$.ajax({
 		type : "post",
-		url : "${appctx}/interface/getlist.do",
+		url : "${appctx}/interface/getapiname.do",
 		dataType : "json",
 		data : {
 			//merserialno : $("#merserialno").val()
@@ -119,20 +119,20 @@ function selectUpdate() {
 						<div class="btn-toolbar">
 							<div class="pull-left"><br><br><br>
 								<div class="input-append">
-								用例名：<input type="text" placeholder="用例名" id="casename" name="casename" value="${testcase.casename}" style="width: 270px; height: 43px"/>
-								场景：<input type="text" placeholder="场景" id="scenario" name="scenario" value="${testcase.scenario}" style="width: 235px;height: 43px "/>	
+								*用例名：<input type="text" placeholder="用例名" id="casename" name="casename" value="${casevo.casename}" style="width: 270px; height: 43px"/>
+								*场景：<input type="text" placeholder="场景" id="scenario" name="scenario" value="${casevo.scenario}" style="width: 235px;height: 43px "/>	
 								</div><br><br><br>
 								<div class="input-append">
-								参数：<textarea rows="10" cols="60" id="parmater" >${testcase.parmater}</textarea> <br>
-								断言字段一：<input type="text" placeholder="断言字段一" id="expectkey1" value="${testcase.expectkey1}"  name="expect" style="height: 43px; "/>	
-								断言字段一的值：<input type="text" placeholder="断言字段一的值" id="expectvalue1" value="${testcase.expectvalue1}"  name="expect" style="height: 43px; "/>	<br>
-								断言字段二：<input type="text" placeholder="断言字段二" id="expectkey2" value="${testcase.expectkey2}"  name="expect" style="height: 43px; "/>	
-								断言字段二的值：<input type="text" placeholder="断言字段二的值" id="expectvalue2" value="${testcase.expectvalue2}"  name="expect" style="height: 43px; "/>
+								*参数：<textarea rows="10" cols="60" id="parmater" >${casevo.parmater}</textarea> <br>
+								*断言字段一：<input type="text" placeholder="断言字段一" id="expectkey1" value="${casevo.expectkey1}"  name="expect" style="height: 43px; "/>	
+								*断言字段一的值：<input type="text" placeholder="断言字段一的值" id="expectvalue1" value="${casevo.expectvalue1}"  name="expect" style="height: 43px; "/>	<br>
+								*断言字段二：<input type="text" placeholder="断言字段二" id="expectkey2" value="${casevo.expectkey2}"  name="expect" style="height: 43px; "/>	
+								*断言字段二的值：<input type="text" placeholder="断言字段二的值" id="expectvalue2" value="${casevo.expectvalue2}"  name="expect" style="height: 43px; "/>
 								</div><br><br><br>
 								
-								接口名：<div data-container="bbb" id="receiveBusiDivision"  style="width: 905px; "></div><br><br><br>
-								<input  type="hidden"  id="interfacename" value="${testcase.apiid}">
-								<input  type="hidden"  id="id" value="${testcase.id}">
+								*接口名：<div data-container="bbb" id="receiveBusiDivision"  style="width: 905px; "></div><br><br><br>
+								<input  type="hidden"  id="interfacename" value="${casevo.apiid}">
+								<input  type="hidden"  id="id" value="${casevo.id}">
 								<p class="center col-md-5">
                     				<button type="button" class="btn btn-primary" onclick="registerFunction()">提交</button>
                     				<button type="button" class="btn btn-primary" onclick="cancelFun()">取消</button>

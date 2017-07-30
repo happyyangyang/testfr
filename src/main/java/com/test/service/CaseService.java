@@ -1,7 +1,7 @@
 package com.test.service;
 
 import java.util.List;
-
+import java.util.Map;
 
 import com.test.model.Testcase;
 import com.test.vo.CaseVo;
@@ -10,7 +10,7 @@ public interface CaseService {
 	
 	List<Testcase> getlist();
 	
-	List<CaseVo> getCaseList();
+	List<CaseVo> getCaseList(Map<String,String> parm);
 	
 	int deleteByPrimaryKey(String id);
 	
@@ -28,5 +28,10 @@ public interface CaseService {
 	
 	
 	Boolean execase(String filepath);
+	
+	
+	//直接发请求
+	
+	Boolean exct(List<String>parm);
 
 }

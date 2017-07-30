@@ -10,7 +10,17 @@
 
  <script type="text/javascript">
  
+ function doQuery(params){
+    $('#tb_departments').bootstrapTable('refresh');    //刷新表格
+}
  
+  function settime1(){
+		if (countdown == 5) { 
+			alert("操作成功，"+"点击确定后跳转到报告列表页面");
+			location.href="${appctx}/jsp/history.jsp";
+		    return;
+	     } 
+	}
  
  Date.prototype.Format = function (fmt) { //author: meizz 
     var o = {
@@ -28,13 +38,62 @@
     return fmt;
 }
 
-
+ 	function detail(rowid){
+ 		 location.href='${appctx}/report/detail.do?id='+rowid;
+ 	}
+ 	// //批量删除
+ 	function delbatch(arr){
+ 	
+ 		 $.ajax({
+	        url: '${appctx}/report/deletebatchReporter.do',
+	        async: true,
+	        contentType:"application/json",
+	        type: 'POST',
+	        data: JSON.stringify(arr),
+	        success: function(data , textStatus){
+	        	
+		          if(data.result=="success"){
+		        	  countdown = 5;
+			          settime1();
+		          }else if(data.result=="error"){
+		        	  alert("删除失败");
+		          }
+	        },
+	        error: function(jqXHR , textStatus , errorThrown){
+	        	alert("系统异常，请联系管理员！");
+	        }
+	      });
+ }
  //初始化
  $(function () {
 	 
 	 //1.初始化Table
 	 var oTable = new TableInit();
 	 oTable.Init();
+	 
+	 //点击前台删除按钮
+     $("#btn_delete").click(function(){
+		 var a= $('#tb_departments').bootstrapTable('getSelections'); 
+		 var arr = new Array();
+		 if(a.length==0){
+		 	alert("请选择一行");
+		 }else {
+		 	for(var i=0;i<a.length;i++){
+		 		arr[i] = a[i].id
+		 		//alert(arr[i]);
+		 	}
+		 	delbatch(arr);
+		 }
+		 
+	} )
+	  
+     $('#datetimepicker2').datepicker({
+            language: "zh-CN",
+            autoclose: true,//选中之后自动隐藏日期选择框
+            clearBtn: true,//清除按钮
+            todayBtn: true,//今日按钮
+            format: "yyyy-mm-dd"//日期格式，详见 http://bootstrap-datepicker.readthedocs.org/en/release/options.html#format
+        });
 
  })
  
@@ -60,16 +119,16 @@
 	 pageSize: 10, //每页的记录行数（*）
 	 pageList: [10,25,50,100], //可供选择的每页的行数（*）
 	 //search: true, //是否显示表格搜索，此搜索是客户端搜索，不会进服务端，所以，个人感觉意义不大
-	 //strictSearch: true,
+	 strictSearch: true,
 	 showColumns: true, //是否显示所有的列
-	// showRefresh: true, //是否显示刷新按钮
+	 showRefresh: true, //是否显示刷新按钮
 	 minimumCountColumns: 2, //最少允许的列数
 	 clickToSelect: true, //是否启用点击选中行
 	 height: 550, //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
 	 uniqueId: "ID", //每一行的唯一标识，一般为主键列
-	 //showToggle:true, //是否显示详细视图和列表视图的切换按钮
-	// cardView: false, //是否显示详细视图
-	// detailView: false, //是否显示父子表
+	 showToggle:true, //是否显示详细视图和列表视图的切换按钮
+	 cardView: false, //是否显示详细视图
+	 detailView: false, //是否显示父子表
 	 
 	 columns: [
 	           {
@@ -96,26 +155,20 @@
 	 title: '通过数'
 	 },{
 	 field: 'failurescount',
-	 title: '失败数（断言失败）'
-	 },{
-	 field: 'errorcount',
-	 title: '报错数'
-	 },{
-	 field: 'skipscount',
-	 title: '未执数'
+	 title: '失败数'
 	 },{
 	 field: 'successpercent',
 	 title: '通过率',
 	  formatter: function(value,row,index){
 		 
-		 return value*100+"%";}
+		 return value+"%";}
 	 },
 	 {
 	 field: 'operate',
 	 title: '操作',
 	 align: 'center',
 	 formatter: function(value,row,index){
-		 var d = '<a href="#" id="detail" mce_href="#" onclick="detail(\''+ row.id +'\')">详情</a> ';
+		 var d = '<a href="#" id="detail" mce_href="#" onclick="detail(\''+ row.id +'\')">失败日志</a> ';
 		 return d;}
 		 }]
 	 });
@@ -126,8 +179,7 @@
 	 var temp = { //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
 	 limit: params.limit, //页面大小
 	 offset: params.offset, //页码
-	 projectname: $("#txt_search_departmentname").val(),
-	 name: $("#txt_search_name").val()
+	 date: $("#exctdate").val()
 	 };
 	 return temp;
 	 };
@@ -145,19 +197,20 @@
 	 <div class="panel-heading">查询条件</div>
 	 <div class="panel-body">
 	 <form id="formSearch" class="form-horizontal">
-	 <div class="form-group" style="margin-top:15px">
-	 <label class="control-label col-sm-1" for="txt_search_departmentname" >执行日期  </label>
-	 <div class="col-sm-3">
-	 <input type="text" class="form-control" id="txt_search_projectname">
-	 </div>
-	 <label class="control-label col-sm-1" for="txt_search_statu">接口名称</label>
-	 <div class="col-sm-3">
-	 <input type="text" class="form-control" id="txt_search_name">
-	 </div>
-	 <div class="col-sm-4" style="text-align:left;">
-	 <button type="button" style="margin-left:50px" id="btn_query" class="btn btn-primary" >查询</button>
-	 </div>
-	 </div>
+	    <div class="form-group">  
+       		<label class="col-sm-2 control-label" for = "name">执行时间:</label> 
+            <div class="col-sm-3">
+            	<div class='input-group date' id='datetimepicker2'> 
+	               	<input type='text' class="form-control" id="exctdate" />  
+	                <span class="input-group-addon">  
+	                    <span class="glyphicon glyphicon-calendar"></span>  
+	                </span>  
+            	</div> 	
+            </div>
+            <button type="button" style="margin-left:50px" id="btn_query" onclick="doQuery();" class="btn btn-primary" >查询</button>
+            <dir>   
+        </div>  
+    </div>  
 	 </form>
 	 </div>
 	 </div> 

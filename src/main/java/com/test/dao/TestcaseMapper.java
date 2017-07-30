@@ -5,6 +5,8 @@ import com.test.model.TestcaseExample;
 import com.test.vo.CaseVo;
 
 import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.DeleteProvider;
 import org.apache.ibatis.annotations.Insert;
@@ -67,25 +69,9 @@ public interface TestcaseMapper {
 	    })
 	    CaseVo selectByid(String id);
 	    
-	    @Select({
-	    	"select a.id,",
-	    	"a.casename,",
-	    	"a.scenario,",
-	    	"a.parmater,",
-	    	"a.expectkey1,",
-	    	"a.expectvalue1,",
-	    	"a.expectkey2,",
-	    	"a.expectvalue2,",
-	    	"b.name,",
-	    	"b.url,",
-	    	"b.method,",
-	    	"b.projectname",
-	    	"from testcase a ,apinfor b",
-	    	"where a.apiid = b.id"
-	    	
-	    		
-	    })
-	    List<CaseVo> getCaseList();
+	
+	    @SelectProvider(method = "caselist", type = TestcaseSqlProvider.class)
+	    List<CaseVo> getCaseList(Map<String,String> parm);
 	    
 	   
 	    

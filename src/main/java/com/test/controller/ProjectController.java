@@ -45,6 +45,7 @@ public class ProjectController {
 		@RequestMapping("/newapi")
 		@ResponseBody
 		public Map<String,String> newapi(@RequestBody Apinfor apinfor,HttpServletRequest request){
+			System.out.println(apinfor.getProjectname());
 			Map<String,String> map = new HashMap<String,String>();
 			User loginUser = (User)request.getSession().getAttribute("loginUser");
 			if(loginUser!=null){
@@ -134,17 +135,41 @@ public class ProjectController {
 			
 		}
 		
+	
+		//获取接口所有数据的列表
+		@RequestMapping("/getapiname")
+		@ResponseBody
+		public List<Apinfor> getapiname(HttpServletRequest request){
+			List<Apinfor> apilist = null;
+			User loginUser = (User)request.getSession().getAttribute("loginUser");
+			System.out.println("获取list的user："+loginUser);
+			if(loginUser!=null){
+				apilist = apinforService.AllApinfor();
+				
+			}
+			return apilist;
+			
+		}
+		
+	
+		
 		
 	//获取接口所有数据的列表
 	@RequestMapping("/getlist")
 	@ResponseBody
-	public List<Apinfor> getlist(HttpServletRequest request){
+	public List<Apinfor> getlist(@RequestBody HashMap<String,String> parm,HttpServletRequest request){
+		List<Apinfor> apilist = null;
+		String prjcectname = parm.get("projectname");
+		String apiname = parm.get("name");
 		User loginUser = (User)request.getSession().getAttribute("loginUser");
 		System.out.println("获取list的user："+loginUser);
 		if(loginUser!=null){
-			return apinforService.AllApinfor();
+			
+				apilist = apinforService.AllApinforbytwo(parm);
+			
+			
 		}
-		return null;
+		return apilist;
 		
 	}
 	//批量删除接口

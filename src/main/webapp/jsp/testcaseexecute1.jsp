@@ -8,11 +8,6 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
  <script type="text/javascript">
- 
-  //刷新表格
- function doQuery(params){
-    $('#tb_departments').bootstrapTable('refresh');    //刷新表格
-}
  function settime1(){
 		if (countdown == 5) { 
 			alert("批量生成可执行文件成功，"+"点击确定后跳转到接口列表页面");
@@ -20,10 +15,53 @@
 		    return;
 	     } 
 	}
+
+ //批量生成可执行文件
+ function executebatch(arr){
+ 	 $.ajax({
+	        url: '${appctx}/testCase/getexebatchcase1.do',
+	        async: true,
+	        contentType:"application/json",
+	        type: 'POST',
+	        data: JSON.stringify(arr),
+	        success: function(data , textStatus){
+	        	
+		          if(data.result=="success"){
+		        	  countdown = 5;
+			          settime1();
+		          }else if(data.result=="error"){
+		        	  alert("批量生成失败");
+		          }
+	        },
+	        error: function(jqXHR , textStatus , errorThrown){
+	        	alert("系统异常，请联系管理员！");
+	        }
+	      });
+ } 
  
- //批量执行
  
- //单条执行
+ //执行文件
+ 
+  function execase(){
+ 	 $.ajax({
+	        url: '${appctx}/testCase/exebatchcase.do',
+	        async: true,
+	        contentType:"application/json",
+	        type: 'POST',
+	        success: function(data , textStatus){
+	        	
+		          if(data.result=="success"){
+		        	  countdown = 5;
+			          settime1();
+		          }else if(data.result=="error"){
+		        	  alert("批量生成失败");
+		          }
+	        },
+	        error: function(jqXHR , textStatus , errorThrown){
+	        	alert("系统异常，请联系管理员！");
+	        }
+	      });
+ } 
  function execute(rowid){
 	 location.href='${appctx}/testCase/updatecase.do?id='+rowid;
  }
@@ -36,7 +74,7 @@
 	
 	 //批量成功可执行文件
 	
-	 //批量执行
+	 //工具栏的删除
 	 $("#btn_executebatch").click(function(){
 		 var a= $('#tb_departments').bootstrapTable('getSelections'); 
 		 var arr = new Array();
@@ -51,28 +89,6 @@
 		 }
 		 
 	} )
-	//批量删除
-	function executebatch(arr){
-		 $.ajax({
-	        url: '${appctx}/testCase/exct.do',
-	        async: true,
-	        contentType:"application/json",
-	        type: 'POST',
-	        data: JSON.stringify(arr),
-	        success: function(data , textStatus){
-	        	
-		          if(data.result=="success"){
-		        	  countdown = 5;
-			          settime1();
-		          }else if(data.result=="error"){
-		        	  alert("执行失败");
-		          }
-	        },
-	        error: function(jqXHR , textStatus , errorThrown){
-	        	alert("系统异常，请联系管理员！");
-	        }
-	      });
-	}
 	
 	$("#btn_execute").click(function(){
 			execase();
@@ -101,8 +117,8 @@
 	 sidePagination: "client", //分页方式：client客户端分页，server服务端分页（*）
 	 pageNumber:1, //初始化加载第一页，默认第一页
 	 pageSize: 10, //每页的记录行数（*）
-	 pageList: [10,50,100,200,300,400,500], //可供选择的每页的行数（*）
-	 //search: true, //是否显示表格搜索，此搜索是客户端搜索，不会进服务端，所以，个人感觉意义不大
+	 pageList: [10,50,100], //可供选择的每页的行数（*）
+	 search: true, //是否显示表格搜索，此搜索是客户端搜索，不会进服务端，所以，个人感觉意义不大
 	 strictSearch: true,
 	 showColumns: true, //是否显示所有的列
 	 showRefresh: true, //是否显示刷新按钮
@@ -122,7 +138,10 @@
     title: '序号',//标题  可不加  
     formatter: function (value, row, index) {  
         return index+1;  }  
-	},{
+	} ,{
+		 field: 'id',
+		 title: '用例id'
+		 } ,{
 	 field: 'casename',
 	 title: '用例名'
 	 },{
@@ -173,8 +192,8 @@
 	 var temp = { //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
 	 limit: params.limit, //页面大小
 	 offset: params.offset, //页码
-	 projectname: $("#txt_search_projectname").val(),
-	 casename: $("#txt_search_name").val()
+	 departmentname: $("#txt_search_departmentname").val(),
+	 statu: $("#txt_search_statu").val()
 	 };
 	 return temp;
 	 };
@@ -198,10 +217,10 @@
 	 </div>
 	 <label class="control-label col-sm-1" for="txt_search_statu">用例名</label>
 	 <div class="col-sm-3">
-	 <input type="text" class="form-control" id=txt_search_name>
+	 <input type="text" class="form-control" id="txt_search_name">
 	 </div>
 	 <div class="col-sm-4" style="text-align:left;">
-	 <button type="button" style="margin-left:50px" id="btn_query" onclick="doQuery();" class="btn btn-primary">查询</button>
+	 <button type="button" style="margin-left:50px" id="btn_query" class="btn btn-primary">查询</button>
 	 </div>
 	 </div>
 	 </form>
@@ -210,7 +229,10 @@
 	 
 	 <div id="toolbar" class="btn-group">
 	 <button id="btn_executebatch" type="button" class="btn btn-default">
-	 <span class="glyphicon glyphicon-play-circle" ></span>批量执行
+	 <span class="glyphicon glyphicon-play-circle" ></span>批量生成可执行文件
+	 </button>
+	<button id="btn_execute" type="button" class="btn btn-default">
+	 <span class="glyphicon glyphicon-play-circle" ></span>执行可执行文件
 	 </button>
 	 </div>
 	 <table id="tb_departments"></table>

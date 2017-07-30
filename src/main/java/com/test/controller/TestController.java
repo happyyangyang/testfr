@@ -75,13 +75,14 @@ public class TestController {
 	//获取列表
 		 @RequestMapping("/getcaselist")
 		 @ResponseBody
-		 public List<CaseVo> getcaselist(HttpServletRequest request){
+		 public List<CaseVo> getcaselist(@RequestBody Map<String,String> parm,HttpServletRequest request){
 			 
 			 User user = (User)request.getSession().getAttribute("loginUser");
 			 if(user!=null){
 				 //return caseService.getlist();
-				 return caseService.getCaseList();
+				 return caseService.getCaseList(parm);
 			 }
+			 
 			return null;
 			
 			 
@@ -150,6 +151,28 @@ public class TestController {
 						
 			}  
 			
+			//批量执行请求不在生成testng类
+			@RequestMapping("/exct")
+			@ResponseBody
+			public Map<String,String> exct(@RequestBody List<String> parm,HttpServletRequest request){
+				Map<String,String> map = new HashMap<String,String>();
+				User loginUser = (User)request.getSession().getAttribute("loginUser");
+				if(loginUser!=null){
+					boolean num = caseService.exct(parm);
+					if(num){
+						map.put("result", "success");
+								
+					}else{
+						map.put("result", "error");
+						}
+				}
+			return map;
+						
+			}  
+			
+			
+			
+			
 			//更新用例updatetestcase
 
 			@RequestMapping("/updatetestcase")
@@ -180,9 +203,9 @@ public class TestController {
 			@RequestMapping("/updatecase")
 			public String updatecase(String id,HttpServletRequest request){
 				//CaseVo casevo = caseService.selectByid(id);
-				Testcase testcase = caseService.selectid(id);
+				CaseVo casevo = caseService.selectByPrimaryKey(id);
 				//前端也value=“S{Attributename.属性}”
-				request.setAttribute("testcase", testcase);
+				request.setAttribute("casevo", casevo);
 				
 				return "updatecase";
 

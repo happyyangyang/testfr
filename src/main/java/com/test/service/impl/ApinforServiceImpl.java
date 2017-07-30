@@ -1,6 +1,7 @@
 package com.test.service.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -53,6 +54,12 @@ public class ApinforServiceImpl implements ApinforService {
 	public int updateByPrimaryKeySelective(Apinfor record) {
 		
 		return apinforDao.updateByPrimaryKeySelective(record);
+	}
+
+	@Override
+	public List<Apinfor> AllApinforbytwo(Map<String,String> map) {
+		// TODO Auto-generated method stub
+		return apinforDao.getList(map);
 	}
 
 }

@@ -16,7 +16,10 @@
  <link href="bootstrap-table.css" rel="stylesheet" />
  <script src="bootstrap-table-zh-CN.min.js"></script>-->
  <script type="text/javascript">
- 
+   //刷新表格
+ function doQuery(params){
+    $('#tb_departments').bootstrapTable('refresh');    //刷新表格
+}
  function settime1(){
 		if (countdown == 5) { 
 			alert("操作成功，"+"点击确定后跳转到接口列表页面");
@@ -100,6 +103,8 @@
 		 }
 		 
 	} );
+	//查询
+	$("#btn_query").click()
 	
 	// 批量导入
 	
@@ -151,7 +156,7 @@
 	 pageNumber:1, //初始化加载第一页，默认第一页
 	 pageSize: 10, //每页的记录行数（*）
 	 pageList: [10, 25, 50, 100], //可供选择的每页的行数（*）
-	 search: true, //是否显示表格搜索，此搜索是客户端搜索，不会进服务端，所以，个人感觉意义不大
+	 //search: true, //是否显示表格搜索，此搜索是客户端搜索，不会进服务端，所以，个人感觉意义不大
 	 strictSearch: true,
 	 showColumns: true, //是否显示所有的列
 	 showRefresh: true, //是否显示刷新按钮
@@ -171,10 +176,7 @@
     title: '序号',//标题  可不加  
     formatter: function (value, row, index) {  
         return index+1;  }  
-	} ,{
-		 field: 'id',
-		 title: '用例id'
-		 } ,{
+	},{
 	 field: 'casename',
 	 title: '用例名'
 	 },{
@@ -226,8 +228,8 @@
 	 var temp = { //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
 	 limit: params.limit, //页面大小
 	 offset: params.offset, //页码
-	 departmentname: $("#txt_search_departmentname").val(),
-	 statu: $("#txt_search_statu").val()
+	 projectname: $("#txt_search_projectname").val(),
+	 casename: $("#txt_search_name").val()
 	 };
 	 return temp;
 	 };
@@ -245,7 +247,7 @@
 	 <div class="panel-body">
 	 <form id="formSearch" class="form-horizontal">
 	 <div class="form-group" style="margin-top:15px">
-	 <label class="control-label col-sm-1" for="txt_search_departmentname">项目名称</label>
+	 <label class="control-label col-sm-1" for="txt_search_projectname">项目名称</label>
 	 <div class="col-sm-3">
 	 <input type="text" class="form-control" id="txt_search_projectname">
 	 </div>
@@ -254,7 +256,7 @@
 	 <input type="text" class="form-control" id="txt_search_name">
 	 </div>
 	 <div class="col-sm-4" style="text-align:left;">
-	 <button type="button" style="margin-left:50px" id="btn_query" class="btn btn-primary">查询</button>
+	 <button type="button" style="margin-left:50px" id="btn_query" onclick="doQuery();" class="btn btn-primary">查询</button>
 	 </div>
 	 </div>
 	 </form>
