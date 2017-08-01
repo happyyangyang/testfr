@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.testng.Assert;
@@ -34,6 +35,7 @@ import com.test.vo.CaseVo;
 
 @Service("CaseService") 
 public class CaseServiceImpl implements CaseService {
+	Logger logger = Logger.getLogger(CaseServiceImpl.class);
 	
 	@Autowired
     private TestcaseMapper caseDao;
@@ -146,7 +148,74 @@ public class CaseServiceImpl implements CaseService {
 		for(int i=0;i<parm.size();i++){
 			cases.add(caseDao.selectByid(parm.get(i)));
 		}
+		
+		//判断是post还是get
 		if(!cases.isEmpty()){
+			MyHttpUrlConnect http = new MyHttpUrlConnect();
+			String reslutstr = null;
+			try{
+				for(int i=0;i<cases.size();i++){
+					if("get".equalsIgnoreCase(cases.get(i).getMethod())){
+						String Parmurl = cases.get(i).getUrl()+"?"+cases.get(i).getParmater();
+						reslutstr = http.get(Parmurl);
+					}else if("post".equalsIgnoreCase(cases.get(i).getMethod())){
+						String url = cases.get(i).getUrl();
+						String rawbody = cases.get(i).getParmater();
+						reslutstr = http.postrawBody(url, rawbody);
+					}else{
+						logger.error("请求非get和post");
+					}
+					//断言
+					
+					String value1 = cases.get(i).getExpectvalue1();
+					String key1 = cases.get(i).getExpectkey1();
+					String value2= cases.get(i).getExpectvalue2();
+					String key2 = cases.get(i).getExpectkey2();
+					//获取断言字段
+					if(value1!=null && key1!=null){
+						if(!value1.isEmpty()&&!key1.isEmpty()){
+							JSONObject jsonobject = JSON.parseObject(reslutstr);
+							String reall = jsonobject.getString(cases.get(i).getExpectkey1());
+							if(reall!=null){
+								if(reall.equalsIgnoreCase(cases.get(i).getExpectvalue1())){
+									//成功条数+1
+									successcount++;
+								}
+							}else{
+								logger.error("断言字段在返回报文中不存在，请检查");
+							}
+							
+						}
+						
+					}else if(value2!=null && key2!=null) {
+						if(!value2.isEmpty()&&!key2.isEmpty()){
+							JSONObject jsonobject = JSON.parseObject(reslutstr);
+							String reall = jsonobject.getString(cases.get(i).getExpectkey1());
+							if(reall!=null){
+								if(reall.equalsIgnoreCase(cases.get(i).getExpectvalue1())){
+									//成功条数+1
+									successcount++;
+								}
+							}else{
+								logger.error("断言字段在返回报文中不存在，请检查");
+							}
+							
+						}
+						
+						
+					}else{
+						System.out.println("两个断言字段中有空");
+					}
+					
+				}
+				
+			}catch(Exception e){
+				logger.error(e.getMessage());
+			}
+			
+			
+		}
+		/*if(!cases.isEmpty()){
 			MyHttpUrlConnect http = new MyHttpUrlConnect();
 			for(int i=0;i<cases.size();i++){
 				String s =http.postrawBody(cases.get(i).getUrl(), cases.get(i).getParmater());
@@ -192,7 +261,7 @@ public class CaseServiceImpl implements CaseService {
 				}
 				result.append(s);
 			}
-		}
+		}*/
 		long endtime = System.currentTimeMillis();
 		 
 		long time = endtime - beagintime;

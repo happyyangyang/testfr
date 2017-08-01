@@ -162,7 +162,7 @@ public class ProjectController {
 		String prjcectname = parm.get("projectname");
 		String apiname = parm.get("name");
 		User loginUser = (User)request.getSession().getAttribute("loginUser");
-		System.out.println("获取list的user："+loginUser);
+		//System.out.println("获取list的user："+loginUser);
 		if(loginUser!=null){
 			
 				apilist = apinforService.AllApinforbytwo(parm);

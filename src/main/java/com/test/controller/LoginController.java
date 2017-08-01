@@ -11,6 +11,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,6 +32,7 @@ import com.test.service.UserService;
 @Controller
 @RequestMapping("user")
 public class LoginController {
+	Logger logger = Logger.getLogger(LoginController.class);
 	
 	 @Resource  
 	 private UserService userService;  
@@ -98,23 +100,28 @@ public class LoginController {
 	 //前端中的name和pojo的属性名一致
 	 
 	 @RequestMapping("/sucesspojo")
-	 public String sucesspojo(User user,HttpServletRequest request){ 
-		
+	 @ResponseBody
+	 public Map<String,String> sucesspojo(@RequestBody User user,HttpServletRequest request){ 
+		 Map<String,String> map = new HashMap<String,String>();
 		 User u =userService.getUserByNameAndPwd(user);
 		
 		 if(u!=null){
 			 
 			 request.getSession().setAttribute("loginUser",user);
 			 System.out.println("登录user："+request.getSession().getAttribute("loginUser"));
-			 return "main";
+			 map.put("result", "success");
+			 logger.info("登陆成功");
 		 }
 		 else{
-			 return "fail";
+			 map.put("result", "error");
+			 logger.info("登陆失败,用户名或者验证错误");
 		 }
-		 
+		 return map;
 	 }
-	 
-	 
+	 @RequestMapping("/loginSuccess")
+		public String loginSuccess(HttpServletRequest request){
+			return "main";
+		}
 	 //退出操作
 	 @RequestMapping("/exit")
 	 public void exti(HttpServletResponse response,HttpServletRequest request)throws IOException{

@@ -108,14 +108,14 @@
 									<li><a class="ajax-link"  target='main_target' href="${appctx}/user/toapilist.do"><i class="glyphicon glyphicon-align-justify"></i><span>Http接口</span></a></li>
 									<li><a class="ajax-link"  target='main_target' href="${appctx}/user/totestcaselist.do""><i class="glyphicon glyphicon-calendar"></i><span>测试用例</span></a></li>
 									<li><a class="ajax-link"  target='main_target' href="${appctx}/user/totestcaseexecute.do""><i class="glyphicon glyphicon-th"></i><span>用例执行</span></a></li>
-									<li><a class="ajax-link"  target='main_target' href="${appctx}/user/tohistory.do""><i class="glyphicon glyphicon-th"></i><span>测试运行记录</span></a></li>
+									<li><a class="ajax-link"  target='main_target' href="${appctx}/user/tohistory.do""><i class="glyphicon glyphicon-th"></i>测试报告</a></li>
 								</ul>
 							</li>
-							<li class="accordion"><a href="#"><i class="glyphicon glyphicon-plus"></i><span>权限管理</span></a>
+							<li class="accordion"><a href="#"><i class="glyphicon glyphicon-plus"></i><span>UI自动化</span></a>
 								<ul class="nav nav-pills nav-stacked">
-									<li><a class="ajax-link"  target='main_target' href="${appctx}/userController/userIndex"><i class="glyphicon glyphicon-align-justify"></i><span>用户管理</span></a></li>
-									<li><a class="ajax-link"  target='main_target' href="${appctx}/roleController/roleIndex"><i class="glyphicon glyphicon-calendar"></i><span>角色管理</span></a></li>
-									<li><a class="ajax-link"  target='main_target' href="${appctx}/resourceController/resourceIndex"><i class="glyphicon glyphicon-th"></i><span>资源管理</span></a></li>
+									<li><a class="ajax-link"  target='main_target' href="${appctx}/userController/userIndex"><i class="glyphicon glyphicon-align-justify"></i><span>页面管理</span></a></li>
+									<li><a class="ajax-link"  target='main_target' href="${appctx}/roleController/roleIndex"><i class="glyphicon glyphicon-calendar"></i><span>用例管理</span></a></li>
+									<li><a class="ajax-link"  target='main_target' href="${appctx}/resourceController/resourceIndex"><i class="glyphicon glyphicon-th"></i>测试报告</a></li>
 								</ul>
 							</li>
 							<li class="accordion"><a href="#"><i class="glyphicon glyphicon-plus"></i><span>系统管理</span></a>

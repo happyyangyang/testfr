@@ -36,6 +36,27 @@
     		}else if($("#password").val()==null||(!$("#password").val().length>0)){
     			$("#alertId").show();
     			$("#alertContent").html("请输入密码");
+    		}else{
+    			$.ajax({
+    				 url: '${appctx}/user/sucesspojo.do',
+     		        async: true,
+     		        contentType:"application/json",
+     		        type: 'POST',
+     		        data: JSON.stringify({username:$("#username").val(),pwd:$("#password").val()}),
+     		        success: function(data , textStatus){
+     		          if(data.result=="success"){
+     		        	  location.href="${appctx}/user/loginSuccess.do";
+     		          }else if(data.result=="error"){
+     		        	  $("#alertId").show();
+     		        	  $("#alertContent").html("登陆失败，用户名或者密码不正确");
+     		          }
+     		        },
+     		        error: function(jqXHR , textStatus , errorThrown){
+     		        	$("#alertId").show();
+     		        	$("#alertContent").html("系统异常，请联系管理员！");
+     		        }
+    			}
+    					)
     		}
     	
     	}
@@ -55,17 +76,17 @@
 				<button type="button" class="close" data-dismiss="alert">&times;</button>
 				<strong id="alertContent"></strong>
 			</div>
-            <form class="form-horizontal" action="user/sucesspojo.do" method="post">
+            
                 <fieldset>
                     <div class="input-group input-group-lg">
                         <span class="input-group-addon"><i class="glyphicon glyphicon-user red"></i></span>
-                        <input type="text" class="form-control" name="username" placeholder="Username">
+                        <input type="text" class="form-control" id="username" placeholder="Username">
                     </div>
                     <div class="clearfix"></div><br>
 
                     <div class="input-group input-group-lg">
                         <span class="input-group-addon"><i class="glyphicon glyphicon-lock red"></i></span>
-                        <input type="password" class="form-control" name="pwd" placeholder="Password">
+                        <input type="password" class="form-control" id="password" placeholder="Password">
                     </div>
                     <div class="clearfix"></div><br>
                     <div class="row">
@@ -80,7 +101,7 @@
                     </p>
                     
                 </fieldset>
-            </form>
+           
         </div>
         <!--/span-->
     </div><!--/row-->

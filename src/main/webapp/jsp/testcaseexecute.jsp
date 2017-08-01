@@ -15,7 +15,7 @@
 }
  function settime1(){
 		if (countdown == 5) { 
-			alert("批量生成可执行文件成功，"+"点击确定后跳转到接口列表页面");
+			alert("批量执行文件完成，"+"点击确定后跳转回到列表");
 			location.href="${appctx}/jsp/testcaseexecute.jsp";
 		    return;
 	     } 
