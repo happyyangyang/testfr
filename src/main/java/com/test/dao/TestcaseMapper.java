@@ -166,10 +166,10 @@ public interface TestcaseMapper {
      */
     @Select({
     	"select",
-        "casename, scenario, parmater, expectkey1,expectvalue1,expectkey2,expectvalue2, apiid,name,url,method,projectname",
-        "from testcase,apinfor",
-        "where testcase.id = #{id,jdbcType=VARCHAR}",
-        "and testcase.apiid = apinfor.id"
+        "a.id,casename, scenario, parmater, expectkey1,expectvalue1,expectkey2,expectvalue2, apiid,name,url,method,projectname",
+        "from testcase a,apinfor b ",
+        "where a.id = #{id,jdbcType=VARCHAR}",
+        "and a.apiid = b.id"
     })
     @Results({
         @Result(column="id", property="id", jdbcType=JdbcType.VARCHAR, id=true),

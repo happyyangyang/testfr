@@ -62,17 +62,21 @@ function selectUpdate() {
    			alert("请输入场景");
    		}else if($("#parmater").val()==null||(!$("#parmater").val().length>0)){
    			alert("请输入参数");
-   		}else if($("#expect").val()==null||(!$("#expect").val().length>0)){
-   			alert("请输入期望结果");
-   		}else if($("#apiname").val()==null||(!$("#apiname").val()=='请选择')){
-   			alert("请输入期望结果");
+   		}else if($("#expectkey1").val()==null||(!$("#expectkey1").val().length>0)){
+   			alert("请输入断言字段一");
+   		}else if($("#expectvalue1").val()==null||(!$("#expectvalue1").val().length>0)){
+   			alert("请输入断言字段一的值");
+   		}else if($("#expectkey2").val()==null||(!$("#expectkey2").val().length>0)){
+   			alert("请输入断言字段二");
+   		}else if($("#expectvalue2").val()==null||(!$("#expectvalue2").val().length>0)){
+   			alert("请输入断言字段二的值");
    		}else{
    			$.ajax({
    		        url: '${appctx}/testCase/updatetestcase.do',
    		        async: true,
    		        contentType:"application/json",
    		        type: 'POST',
-   		        data: JSON.stringify({id:$("#id").val(),apiid:$("#apiname").val(),casename:$("#casename").val(),scenario:$("#scenario").val(),parmater:$("#parmater").val(),expect:$("#expect").val()}),
+   		        data: JSON.stringify({id:$("#id").val(),apiid:$("#apiname").val(),casename:$("#casename").val(),scenario:$("#scenario").val(),parmater:$("#parmater").val(),expectkey1:$("#expectkey1").val(),expectvalue1:$("#expectvalue1").val(),expectkey2:$("#expectkey2").val(),expectvalue2:$("#expectvalue2").val()}),
    		        success: function(data , textStatus){
    		        	
    			          if(data.result=="success"){

@@ -81,7 +81,7 @@
 				<button class="btn btn-default dropdown-toggle"
 					data-toggle="dropdown">
 					<i class="glyphicon glyphicon-user"></i><span
-						class="hidden-sm hidden-xs">${user.username}</span> <span
+						class="hidden-sm hidden-xs">${loginUser.username}</span> <span
 						class="caret"></span>
 				</button>
 				<ul class="dropdown-menu">

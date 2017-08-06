@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.github.pagehelper.PageInfo;
 import com.test.model.Apinfor;
 import com.test.model.User;
 import com.test.service.ApinforService;
@@ -157,19 +158,26 @@ public class ProjectController {
 	//获取接口所有数据的列表
 	@RequestMapping("/getlist")
 	@ResponseBody
-	public List<Apinfor> getlist(@RequestBody HashMap<String,String> parm,HttpServletRequest request){
+	public Map<String,Object> getlist(@RequestBody HashMap<String,String> parm,HttpServletRequest request){
+		Map<String,Object> map = new HashMap<String,Object>();
 		List<Apinfor> apilist = null;
+		//String limit  offset
+		//每页的数据条数
+		String limit = parm.get("limit");
+		String offset = parm.get("offset");
 		String prjcectname = parm.get("projectname");
 		String apiname = parm.get("name");
 		User loginUser = (User)request.getSession().getAttribute("loginUser");
 		//System.out.println("获取list的user："+loginUser);
 		if(loginUser!=null){
 			
-				apilist = apinforService.AllApinforbytwo(parm);
-			
+			   apilist = apinforService.AllApinforbytwo(parm).getList();
+			    long total = apinforService.AllApinforbytwo(parm).getTotal();
+			    map.put("total", total);
+			    map.put("rows",apilist);
 			
 		}
-		return apilist;
+		return map;
 		
 	}
 	//批量删除接口

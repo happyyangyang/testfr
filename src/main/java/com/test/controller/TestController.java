@@ -96,7 +96,10 @@ public class TestController {
 				testcase.setCasename(parm.get("casename"));
 				testcase.setScenario(parm.get("scenario"));
 				testcase.setParmater(parm.get("parmater"));
-				testcase.setExpectkey1(parm.get("expect"));
+				testcase.setExpectkey1(parm.get("expectkey1"));
+				testcase.setExpectvalue1(parm.get("expectvalue1"));
+				testcase.setExpectkey2(parm.get("expectkey2"));
+				testcase.setExpectvalue2(parm.get("expectvalue2"));
 				testcase.setApiid(parm.get("apiid"));
 				Map<String,String> map = new HashMap<String,String>();
 				User loginUser = (User)request.getSession().getAttribute("loginUser");
@@ -169,9 +172,26 @@ public class TestController {
 			return map;
 						
 			}  
-			
-			
-			
+			//单挑执行
+			@RequestMapping("/exctSingle")
+			@ResponseBody
+			public Map<String,String> exctSingle(String id,HttpServletRequest request){
+				Map<String,String> map = new HashMap<String,String>();
+				User loginUser = (User)request.getSession().getAttribute("loginUser");
+				List<String> parm = new ArrayList<String>();
+				parm.add(id);
+				if(loginUser!=null){
+					boolean num = caseService.exct(parm);
+					if(num){
+						map.put("result", "success");
+								
+					}else{
+						map.put("result", "error");
+						}
+				}
+			return map;
+						
+			}
 			
 			//更新用例updatetestcase
 
@@ -183,7 +203,10 @@ public class TestController {
 				testcase.setCasename(parm.get("casename"));
 				testcase.setScenario(parm.get("scenario"));
 				testcase.setParmater(parm.get("parmater"));
-				testcase.setExpectkey1(parm.get("expect"));
+				testcase.setExpectkey1(parm.get("expectkey1"));
+				testcase.setExpectvalue1(parm.get("expectvalue1"));
+				testcase.setExpectkey2(parm.get("expectkey2"));
+				testcase.setExpectvalue2(parm.get("expectvalue2"));
 				testcase.setApiid(parm.get("apiid"));
 				Map<String,String> map = new HashMap<String,String>();
 				User loginUser = (User)request.getSession().getAttribute("loginUser");

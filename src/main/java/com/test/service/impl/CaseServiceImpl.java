@@ -163,105 +163,71 @@ public class CaseServiceImpl implements CaseService {
 						String rawbody = cases.get(i).getParmater();
 						reslutstr = http.postrawBody(url, rawbody);
 					}else{
+						result.append(cases.get(i).getCasename()+"请求非get和post"+"\r\n");
 						logger.error("请求非get和post");
 					}
-					//断言
 					
-					String value1 = cases.get(i).getExpectvalue1();
-					String key1 = cases.get(i).getExpectkey1();
-					String value2= cases.get(i).getExpectvalue2();
-					String key2 = cases.get(i).getExpectkey2();
-					//获取断言字段
-					if(value1!=null && key1!=null){
-						if(!value1.isEmpty()&&!key1.isEmpty()){
-							JSONObject jsonobject = JSON.parseObject(reslutstr);
-							String reall = jsonobject.getString(cases.get(i).getExpectkey1());
-							if(reall!=null){
-								if(reall.equalsIgnoreCase(cases.get(i).getExpectvalue1())){
-									//成功条数+1
-									successcount++;
-								}
-							}else{
-								logger.error("断言字段在返回报文中不存在，请检查");
-							}
-							
-						}
-						
-					}else if(value2!=null && key2!=null) {
-						if(!value2.isEmpty()&&!key2.isEmpty()){
-							JSONObject jsonobject = JSON.parseObject(reslutstr);
-							String reall = jsonobject.getString(cases.get(i).getExpectkey1());
-							if(reall!=null){
-								if(reall.equalsIgnoreCase(cases.get(i).getExpectvalue1())){
-									//成功条数+1
-									successcount++;
-								}
-							}else{
-								logger.error("断言字段在返回报文中不存在，请检查");
-							}
-							
-						}
-						
-						
+					if(reslutstr == null || reslutstr==""){
+						result.append(cases.get(i).getCasename()+"发送请求的出错，检查url是否正确"+"\r\n");
+						logger.error(cases.get(i).getCasename()+"发送请求的出错，检查url是否正确");
 					}else{
-						System.out.println("两个断言字段中有空");
+						//断言
+						
+						String value1 = cases.get(i).getExpectvalue1();
+						String key1 = cases.get(i).getExpectkey1();
+						String value2= cases.get(i).getExpectvalue2();
+						String key2 = cases.get(i).getExpectkey2();
+						//获取断言字段
+						if(value1!=null && key1!=null){
+							if(!value1.isEmpty()&&!key1.isEmpty()){
+								JSONObject jsonobject = JSON.parseObject(reslutstr);
+								String reall = jsonobject.getString(cases.get(i).getExpectkey1());
+								if(reall!=null){
+									if(reall.equalsIgnoreCase(cases.get(i).getExpectvalue1())){
+										//成功条数+1
+										successcount++;
+									}
+								}else{
+									result.append(cases.get(i).getCasename()+"断言字段在返回报文中不存在，请检查"+"\r\n");
+									logger.error("断言字段在返回报文中不存在，请检查");
+								}
+								
+							}
+							
+						}else if(value2!=null && key2!=null) {
+							if(!value2.isEmpty()&&!key2.isEmpty()){
+								JSONObject jsonobject = JSON.parseObject(reslutstr);
+								String reall = jsonobject.getString(cases.get(i).getExpectkey1());
+								if(reall!=null){
+									if(reall.equalsIgnoreCase(cases.get(i).getExpectvalue1())){
+										//成功条数+1
+										successcount++;
+									}
+								}else{
+									result.append(cases.get(i).getCasename()+"断言字段在返回报文中不存在，请检查"+"\r\n");
+									logger.error("断言字段在返回报文中不存在，请检查");
+								}
+								
+							}
+							
+							
+						}else{
+							result.append(cases.get(i).getCasename()+"两个断言字段中有空"+"\r\n");
+							logger.error("两个断言字段中有空");
+						}
 					}
+					
 					
 				}
 				
 			}catch(Exception e){
+				result.append(e.getStackTrace());
 				logger.error(e.getMessage());
 			}
 			
 			
 		}
-		/*if(!cases.isEmpty()){
-			MyHttpUrlConnect http = new MyHttpUrlConnect();
-			for(int i=0;i<cases.size();i++){
-				String s =http.postrawBody(cases.get(i).getUrl(), cases.get(i).getParmater());
-				//System.out.println(s);
-				String value1 = cases.get(i).getExpectvalue1();
-				String key1 = cases.get(i).getExpectkey1();
-				String value2= cases.get(i).getExpectvalue2();
-				String key2 = cases.get(i).getExpectkey2();
-				//获取断言字段
-				if(value1!=null && key1!=null){
-					if(!value1.isEmpty()&&!key1.isEmpty()){
-						JSONObject jsonobject = JSON.parseObject(s);
-						String reall = jsonobject.getString(cases.get(i).getExpectkey1());
-						if(reall!=null){
-							if(reall.equalsIgnoreCase(cases.get(i).getExpectvalue1())){
-								//成功条数+1
-								successcount++;
-							}
-						}else{
-							System.out.println("断言字段在返回报文中不存在，请检查");
-						}
-						
-					}
-					
-				}else if(value2!=null && key2!=null) {
-					if(!value2.isEmpty()&&!key2.isEmpty()){
-						JSONObject jsonobject = JSON.parseObject(s);
-						String reall = jsonobject.getString(cases.get(i).getExpectkey1());
-						if(reall!=null){
-							if(reall.equalsIgnoreCase(cases.get(i).getExpectvalue1())){
-								//成功条数+1
-								successcount++;
-							}
-						}else{
-							System.out.println("断言字段在返回报文中不存在，请检查");
-						}
-						
-					}
-					
-					
-				}else{
-					System.out.println("两个断言字段中有空");
-				}
-				result.append(s);
-			}
-		}*/
+		
 		long endtime = System.currentTimeMillis();
 		 
 		long time = endtime - beagintime;

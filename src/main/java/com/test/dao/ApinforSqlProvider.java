@@ -44,6 +44,8 @@ public class ApinforSqlProvider {
     	mysql.append("where 1=1");
     	String pr= map.get("projectname");
     	String na = map.get("name");
+    	String limit = map.get("limit");
+    	String offset = map.get("offset");
     	if(pr !=null && !pr.isEmpty()){
     		mysql.append(" and projectname like '%"+pr+"%'");
     	}

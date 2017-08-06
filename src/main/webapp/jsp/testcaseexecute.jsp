@@ -25,7 +25,7 @@
  
  //单条执行
  function execute(rowid){
-	 location.href='${appctx}/testCase/updatecase.do?id='+rowid;
+	 location.href='${appctx}/testCase/exctSingle.do?id='+rowid;
  }
 
  $(function () {

@@ -3,6 +3,7 @@ package com.test.service;
 import java.util.List;
 import java.util.Map;
 
+import com.github.pagehelper.PageInfo;
 import com.test.model.Apinfor;
 
 
@@ -11,7 +12,7 @@ public interface ApinforService {
 	
 	List<Apinfor> AllApinfor();
 	
-	List<Apinfor> AllApinforbytwo(Map<String,String> map);
+	PageInfo<Apinfor> AllApinforbytwo(Map<String,String> map);
 	
 	 int deleteByPrimaryKey(String id);
 	 

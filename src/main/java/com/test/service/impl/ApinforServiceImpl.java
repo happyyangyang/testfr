@@ -6,6 +6,8 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.test.dao.ApinforMapper;
 import com.test.model.Apinfor;
 import com.test.model.User;
@@ -57,9 +59,13 @@ public class ApinforServiceImpl implements ApinforService {
 	}
 
 	@Override
-	public List<Apinfor> AllApinforbytwo(Map<String,String> map) {
-		// TODO Auto-generated method stub
-		return apinforDao.getList(map);
+	public PageInfo<Apinfor> AllApinforbytwo(Map<String,String> map) {
+		int offset = Integer.parseInt(map.get("offset"));
+		int limit = Integer.parseInt(map.get("limit"));
+		PageHelper.startPage(offset,limit);
+		List <Apinfor> apilist = apinforDao.getList(map);
+		PageInfo<Apinfor> page = new PageInfo<Apinfor>(apilist);
+		return page;
 	}
 
 }
