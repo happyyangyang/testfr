@@ -3,6 +3,7 @@ package com.test.service;
 import java.util.List;
 import java.util.Map;
 
+import com.github.pagehelper.PageInfo;
 import com.test.model.Testcase;
 import com.test.vo.CaseVo;
 
@@ -10,7 +11,7 @@ public interface CaseService {
 	
 	List<Testcase> getlist();
 	
-	List<CaseVo> getCaseList(Map<String,String> parm);
+	PageInfo<CaseVo> getCaseList(Map<String,String> parm);
 	
 	int deleteByPrimaryKey(String id);
 	

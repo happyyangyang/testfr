@@ -23,6 +23,8 @@ import org.testng.xml.XmlSuite;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.test.dao.ReporterMapper;
 import com.test.dao.TestcaseMapper;
 import com.test.model.Reporter;
@@ -49,9 +51,13 @@ public class CaseServiceImpl implements CaseService {
 		return caseDao.getlist();
 	}
 	@Override
-	public List<CaseVo> getCaseList(Map<String,String> parm) {
-		
-		return caseDao.getCaseList(parm);
+	public PageInfo<CaseVo> getCaseList(Map<String,String> parm) {
+		int offset =Integer.parseInt(parm.get("offset")) ;
+		int limit =Integer.parseInt(parm.get("limit")) ;
+		PageHelper.startPage(offset, limit);
+		List<CaseVo> caselist = caseDao.getCaseList(parm);
+		PageInfo<CaseVo> page = new PageInfo<CaseVo> (caselist);
+		return page;
 	}
 	@Override
 	public int deleteByPrimaryKey(String id) {
@@ -181,6 +187,8 @@ public class CaseServiceImpl implements CaseService {
 						if(value1!=null && key1!=null){
 							if(!value1.isEmpty()&&!key1.isEmpty()){
 								JSONObject jsonobject = JSON.parseObject(reslutstr);
+								JSONArray jarray = JSON.parseArray(reslutstr);
+								
 								String reall = jsonobject.getString(cases.get(i).getExpectkey1());
 								if(reall!=null){
 									if(reall.equalsIgnoreCase(cases.get(i).getExpectvalue1())){

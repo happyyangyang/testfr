@@ -98,7 +98,7 @@
 	 sortable: false, //是否启用排序
 	 sortOrder: "asc", //排序方式
 	 queryParams: oTableInit.queryParams,//传递参数（*）
-	 sidePagination: "client", //分页方式：client客户端分页，server服务端分页（*）
+	 sidePagination: "server", //分页方式：client客户端分页，server服务端分页（*）
 	 pageNumber:1, //初始化加载第一页，默认第一页
 	 pageSize: 10, //每页的记录行数（*）
 	 pageList: [10,50,100,200,300,400,500], //可供选择的每页的行数（*）
@@ -172,7 +172,7 @@
 	 oTableInit.queryParams = function (params) {
 	 var temp = { //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
 	 limit: params.limit, //页面大小
-	 offset: params.offset, //页码
+	 offset: params.offset/params.limit+1, //页码
 	 projectname: $("#txt_search_projectname").val(),
 	 casename: $("#txt_search_name").val()
 	 };

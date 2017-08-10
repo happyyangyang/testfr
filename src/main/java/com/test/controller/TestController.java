@@ -75,15 +75,19 @@ public class TestController {
 	//获取列表
 		 @RequestMapping("/getcaselist")
 		 @ResponseBody
-		 public List<CaseVo> getcaselist(@RequestBody Map<String,String> parm,HttpServletRequest request){
-			 
+		 public Map<String,Object> getcaselist(@RequestBody Map<String,String> parm,HttpServletRequest request){
+			 Map<String,Object> map = new HashMap<String,Object>();
+			List<CaseVo> caselist = null;
 			 User user = (User)request.getSession().getAttribute("loginUser");
 			 if(user!=null){
 				 //return caseService.getlist();
-				 return caseService.getCaseList(parm);
+				 caselist = caseService.getCaseList(parm).getList();
+				 long total = caseService.getCaseList(parm).getTotal();
+				    map.put("total", total);
+				    map.put("rows",caselist);
 			 }
 			 
-			return null;
+			return map;
 			
 			 
 		 }
